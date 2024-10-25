@@ -1,0 +1,12 @@
+.home-container .title-home {
+  font-family: "Birthstone Bounce";
+  font-size: 200px;
+  font-weight: 500;
+  line-height: 140%; /* 280px */
+  text-align: center;
+  padding-top: 306px;
+  user-select: none;
+  -ms-user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+}
