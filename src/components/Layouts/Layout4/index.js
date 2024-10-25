@@ -1,10 +1,9 @@
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import Header from "../../Header";
+import ShoppingCard from "../../ShoppingCard";
 import SideBar from "../../SideBar";
-import "./LayoutApp.css";
 
-function LayoutApp() {
-  const location = useLocation();
+function Layout4() {
   return (
     <>
       <div className="layout-app-container">
@@ -15,8 +14,10 @@ function LayoutApp() {
           <div className={"header-container"}>
             <Header />
           </div>
-          <div className="component-change">
-            <Outlet />
+          <div className="content-double">
+            <div className="component-change">
+              <Outlet />
+            </div>
           </div>
         </main>
       </div>
@@ -24,4 +25,4 @@ function LayoutApp() {
   );
 }
 
-export default LayoutApp;
+export default Layout4;

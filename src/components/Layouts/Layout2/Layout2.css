@@ -11,10 +11,6 @@ body {
   padding-top: 32px;
 }
 
-/* .content-container {
-  flex: 1;
-} */
-
 .sidebar-component {
   width: 104px;
   height: 100vh;
@@ -30,4 +26,9 @@ body {
 
 .component-change{
     display: flex;
+    width: 1072px;
+}
+
+.layout-app-container .content-double{
+  display: flex;
 }

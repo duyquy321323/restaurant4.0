@@ -46,7 +46,7 @@ function SideBar() {
     {
       iconWhite: LogoutWhiteIcon,
       iconOrange: LogoutOrangeIcon,
-      navigate: "/",
+      navigate: "/login",
     },
   ];
   return (

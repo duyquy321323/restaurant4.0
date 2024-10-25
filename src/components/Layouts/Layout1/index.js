@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
-import "./Layout.css";
+import "./Layout1.css";
 
-function Layout() {
+function Layout1() {
   return (
     <>
       <div className="main-default-layout">
@@ -13,4 +13,4 @@ function Layout() {
   );
 }
 
-export default Layout;
+export default Layout1;

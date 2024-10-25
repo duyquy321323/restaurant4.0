@@ -6,6 +6,7 @@
   border-radius: 8px;
   background: var(--Base-Dark-Bg-2, #1f1d2b);
   width: 275px;
+  height: 743px;
 }
 
 .container-setting-layout .container-component-setting-tab {
