@@ -1,4 +1,4 @@
-<!-- 
+
     => Chạy npm i để tải các thư viện về trước.
     => npm start để khởi động ứng dụng.
     => Dùng axios để kết nối api: Import api vào.
@@ -14,4 +14,3 @@
     => Nếu cần thêm font mới thì cứ thêm vào file base.css.
     => Nhớ phân nhánh git và không được đẩy code lên main.
     => Trong page setting chứa các page update-information, ....
--->
