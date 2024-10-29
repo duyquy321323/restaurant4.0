@@ -12,7 +12,7 @@ function SettingLayout() {
     {
       iconGray: HeartGray,
       iconOrange: HeartOrange,
-      title: "Information",
+      title: "Update Information",
       detail: "Name, Address and Phone number, etc",
       pathname: "/update-information",
     },
