@@ -1,0 +1,118 @@
+.container-shopping-card {
+    display: flex;
+    background-color: #1F1D2B;
+    border-radius: 8px;
+    height: 765px;
+    position: relative;
+    width: 700px;
+    margin: auto;
+}
+
+.container-shopping-card .container {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 24px;
+    left: 24px;
+    position: absolute;
+    top: 24px;
+    margin: auto;
+}
+
+.container-shopping-card .container .header{
+    display: flex;
+    background-color: transparent;
+    height: 63px;
+    margin-right: -2.00px;
+    position: relative;
+    width: 650px;
+    padding: 24px;
+    margin:auto;
+}
+
+.container-shopping-card .container.header.title{
+    width: 132px;
+    position: relative;
+    font-size: 50px;
+    line-height: 140%;
+    font-weight: 600;
+    font-family: Barlow;
+    color: #fff;
+    text-align: left;
+    display: inline-block;
+    height: 13.4px;
+}
+
+.container-shopping-card .container .header .text{
+    display: flex;
+    color: #FAFAFA;
+    left: 0;
+    position: absolute;
+    top: 0;
+    white-space: nowrap;
+    width: 32px;
+    margin: auto;
+    padding-top: 24px;
+}
+
+.container-shopping-card .container .header .divider{
+    display: flex;
+    height: 1px;
+    left: 0;
+    object-fit: cover;
+    position: absolute;
+    background-color: black;
+    top: 0;
+    width: 100%;
+    margin: auto;
+}
+
+.container-shopping-card .container .content{
+    display: flex;
+    gap: 24px;
+    flex-wrap: nowrap;   
+}
+
+.container-shopping-card .container .content .item {
+    
+}
+
+.container-shopping-card .container .content .item img {
+    
+}
+
+.container-shopping-card .container .content .item:hover {
+    
+}
+
+.container-shopping-card .container .footer {
+    
+}
+
+.container-shopping-card .container .footer .text{
+    display: flex;
+    color: #FAFAFA;
+    left: 0;
+    position: absolute;
+    top: 0;
+    white-space: nowrap;
+    width: 32px;
+    margin: auto;
+    padding-top: 16px;
+}
+
+.container-shopping-card .container .footer .divider{
+    display: flex;
+    height: 1px;
+    left: 0;
+    object-fit: cover;
+    position: absolute;
+    background-color: black;
+    top: 0;
+    width: 100%;
+    margin: auto;
+}
+
+.container-shopping-card .container .button {
+    
+}
