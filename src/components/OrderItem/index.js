@@ -28,7 +28,7 @@ function OrderItem(props) {
             </div>
         </div>
         <div className="footer-item-order">
-            <input className="note-item-order" placeholder={(item.note === "")? "Order Note..." : item.note} />
+            <input className="note-item-order" placeholder={"Order Note..."} />
             <div className="bin-item-order" onClick={handleRemove}>
                 <img src={TrashIcon} alt="TrashIcon" />
             </div>
