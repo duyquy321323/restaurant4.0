@@ -1,9 +1,11 @@
 import { combineReducers, createStore } from "redux"
-import { account } from "./action"
+import { account, orderAction, sumOrderAction } from "./action"
 
 
 const allReducers = combineReducers({
      account,
+     orderAction,
+     sumOrderAction,
 })
 
 // Hàm tải dữ liệu vào
