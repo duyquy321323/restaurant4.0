@@ -19,8 +19,8 @@
 .action-container {
   position: fixed;
   bottom: 40px; /* khoảng cách từ dưới cùng */
-  width: 456px;
-  height: 58px;
+  width: 551px;
+  height: 62px;
   display: flex;
   justify-content: center;
 }
