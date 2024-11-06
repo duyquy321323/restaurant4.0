@@ -18,22 +18,6 @@ function Header() {
       title: "Notification",
     },
     {
-      path: "/setting/update-information",
-      title: "Setting",
-    },
-    {
-      path: "/setting/product-manager",
-      title: "Setting",
-    },
-    {
-      path: "/setting/product-manager/add-new-food",
-      title: "Setting",
-    },
-    {
-      path: "/setting/product-manager/edit-food",
-      title: "Setting",
-    },
-    {
       path: "/setting",
       title: "Setting",
     },
@@ -73,7 +57,7 @@ function Header() {
         <div className="left-header">
           <h2 className="title-header">
             {listHeader.map((it) =>
-              it.path === location.pathname ? it.title : ""
+               location.pathname.includes(it.path)? it.title : ""
             )}
           </h2>
           <p className="date-now">

@@ -99,7 +99,7 @@ export const routes = [
             element: <AddFood />,
           },
           {
-            path: "/setting/product-manager/edit-food",
+            path: "/setting/product-manager/edit-food/:id",
             element: <EditFood />,
           },
         ],

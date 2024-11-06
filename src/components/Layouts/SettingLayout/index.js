@@ -59,7 +59,9 @@ function SettingLayout() {
             </>
           ))}
         </div>
+        <div className="content-setting-outlet" style={{flex: 1}}>
         <Outlet />
+        </div>
       </div>
     </>
   );

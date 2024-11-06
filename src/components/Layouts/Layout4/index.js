@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 import Header from "../../Header";
-import ShoppingCard from "../../ShoppingCard";
+import "./Layout4.css";
 import SideBar from "../../SideBar";
 
 function Layout4() {
@@ -15,7 +15,7 @@ function Layout4() {
             <Header />
           </div>
           <div className="content-double">
-            <div className="component-change">
+            <div className="component-change setting">
               <Outlet />
             </div>
           </div>

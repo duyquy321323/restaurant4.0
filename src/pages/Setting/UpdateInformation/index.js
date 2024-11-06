@@ -1,4 +1,8 @@
+
+import "./UpdateInformation.css";
+
 function UpdateInformation(){
+
     return(
         <>
             UpdateInformation

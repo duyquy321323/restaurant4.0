@@ -8,22 +8,18 @@ const api = axios.create({
   },
 });
 
-api.interceptors.request.use((config) => {
-  const currentLocal = window.location.pathname;
-  console.log(currentLocal);
-  const token = document.cookie
-    .split(";")
-    .filter((it) => it.startsWith("token"))
-    .at(0)
-    .split("=")
-    .at(1);
-  if (!token) {
-    localStorage.removeItem("userData");
-    if (currentLocal !== "/login") {
-      window.location.href = "/login";
-    }
-  }
-  return config;
-});
+// api.interceptors.request.use((config) => {
+//   const currentLocal = window.location.pathname;
+//   const token = document.cookie
+//   .split(";")
+//   .find((it) => it.trim().startsWith("token="));
+//   if (!token) {
+//     localStorage.removeItem("userData");
+//     if (currentLocal !== "/login") {
+//       window.location.href = "/login";
+//     }
+//   }
+//   return config;
+// });
 
 export default api;
