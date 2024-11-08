@@ -111,10 +111,6 @@ function ProductManager(){
                     </div>
                     {listFood.map((item) => <ItemProductManagement item={item} />)}
                 </div>
-                <div className="group-btn">
-                    <button className="discard-changes btn-pro">Discard Changes</button>
-                    <button className="save-changes btn-pro">Save Changes</button>
-                </div>
             </div>
         </>
     );

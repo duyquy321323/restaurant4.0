@@ -6,7 +6,7 @@ function ItemProductManagement(props){
     const {item} = props;
     const navigate = useNavigate();
     function handleEditFood(){
-        navigate(`/setting/product-manager/edit-food/${item._id}`);
+        navigate(`/setting/product-manager/edit-food/${item.slug}`);
     }
     return (
         <>
