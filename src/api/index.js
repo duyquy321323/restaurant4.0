@@ -8,6 +8,9 @@ const api = axios.create({
   },
 });
 
+// tạm thời ẩn vì chưa làm login
+
+// Cấu hình cho login
 // api.interceptors.request.use((config) => {
 //   const currentLocal = window.location.pathname;
 //   const token = document.cookie
@@ -21,26 +24,26 @@ const api = axios.create({
 //   }
 //   return config;
 // });
-api.interceptors.request.use((config) => {
-  const currentLocal = window.location.pathname;
-  console.log(currentLocal);
-  const token = document.cookie
-    .split(";")
-    .filter((it) => it.startsWith("token"))
-    .at(0)
-    .split("=")
-    .at(1);
-  if (!token) {
-    localStorage.removeItem("userData");
-    if (currentLocal !== "/login") {
-      window.location.href = "/login";
-    }
-  }
-  return config;
-});
-
 
 export default api;
+// api.interceptors.request.use((config) => {
+//   const currentLocal = window.location.pathname;
+//   console.log(currentLocal);
+//   const token = document.cookie
+//     .split(";")
+//     .filter((it) => it.startsWith("token"))
+//     .at(0)
+//     .split("=")
+//     .at(1);
+//   if (!token) {
+//     localStorage.removeItem("userData");
+//     if (currentLocal !== "/login") {
+//       window.location.href = "/login";
+//     }
+//   }
+//   return config;
+// });
+
 // import axios from "axios";
 
 // // Create an Axios instance with the base URL and default headers
