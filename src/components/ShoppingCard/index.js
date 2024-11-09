@@ -1,11 +1,17 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import OrderItem from "../OrderItem";
+import Payment from "../Payment";
 import "./ShoppingCard.css";
+import { openPayment } from "../../redux/action";
 function ShoppingCard() {
   const location = useLocation();
   const listItem = useSelector(state => state.orderAction);
   const totalPrice = useSelector(state => state.sumOrderAction);
+  const dispatch = useDispatch();
+  function handPayment(){
+    dispatch(openPayment());
+  }
 
   return (
     <>
@@ -32,11 +38,12 @@ function ShoppingCard() {
         </div>
 
         <div className="footer">
-          <button className="submit-btn-shopping-card">
+          <button className="submit-btn-shopping-card" onClick={handPayment}>
             Continue to Payment
           </button>
         </div>
       </div>
+      <Payment />
     </>
   );
 }
