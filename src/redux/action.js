@@ -89,7 +89,11 @@ export const account = (state = null, action) => {
     case "LOGINSUCCESS":
       return action.userData;
     case "LOGOUT":
-      return;
+      {
+        localStorage.removeItem("userData");
+        localStorage.removeItem("token");
+        return null;
+      }
     default:
       return state;
   }

@@ -72,9 +72,6 @@ function Payment() {
                   <h1 className="title-payment">Confirmation</h1>
                   <h2 className="title-payment-small">Order</h2>
                 </div>
-                <button className="add-btn-payment">
-                  <img src={PlusIcon} alt="PlusIcon" />
-                </button>
               </div>
               <div className="content-payment">
                 {Array.from(listItem).map((item) => (

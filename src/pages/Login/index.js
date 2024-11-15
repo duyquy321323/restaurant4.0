@@ -1,9 +1,12 @@
-import axios from "axios";
+/* eslint-disable no-restricted-globals */
 import React, { useState } from 'react';
 import { FaEnvelope, FaUser } from "react-icons/fa";
 import { FaLock } from "react-icons/fa6";
+import { useDispatch } from 'react-redux';
 import { useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
+import api from "../../api";
+import { login } from '../../redux/action';
 import './LoginRegister.css';
 
 
@@ -14,40 +17,41 @@ function Login(props) {
   const [email,setEmail]= useState("");
   const [password, setPassword]= useState("");
   const LoginApi = (email,password) => {
-    return axios.post("users/login", {email,password});
+    return api.post("users/login", {email,password});
   }
-  const handleLoginSubmit = async (event) => {
-    event.preventDefault();
-    if (!email || !password){
-      toast.error("Email/Password is required");
-      return;
-    }
-    let res = await LoginApi(email,password);
-    if (res && res.toke) {
-        localStorage.setItem ("token", res.token)
-        navigate('/')
-    }
-        
- };
- 
-// const handleLoginSubmit = async (event) => {
-//     event.preventDefault(); // Prevent default form submission behavior
-//     if (!email || !password) {
-//       toast.error("Email and password are required");
+  const dispatch = useDispatch();
+//   const handleLoginSubmit = async (event) => {
+//     event.preventDefault();
+//     if (!email || !password){
+//       toast.error("Email/Password is required");
 //       return;
 //     }
-//     try {
-//       const res = await LoginApi(email, password); 
-//       if (res && res.token) {
-//         localStorage.setItem("token", res.token); 
-//         navigate('/'); 
-//       } else {
-//         toast.error("Login failed: Invalid credentials");
-//       }
-//     } catch (error) {
-//       toast.error("Login failed: " + (error.response?.data?.message || error.message));
-//     }
-//   };
+//     let res = await LoginApi(email,password);
+//     if (res && res.target.token) {
+//         localStorage.setItem ("token", res.target.token)
+//         navigate('/')
+//     } 
+//  };
+ 
+const handleLoginSubmit = async (event) => {
+    event.preventDefault(); // Prevent default form submission behavior
+    if (!email || !password) {
+      toast.error("Email and password are required");
+      return;
+    }
+    try {
+      const res = await LoginApi(email, password); 
+      console.log(res);
+      if (res && res.data.token) {
+        dispatch(login(res.data));
+        history.back();
+      } else {
+        toast.error("Login failed: Invalid credentials");
+      }
+    } catch (error) {
+      toast.error("Login failed: " + (error.response?.data?.message || error.message));
+    }
+  };
   const registerLink =() => {
       setAction(' active')
   };
