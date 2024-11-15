@@ -1,3 +1,4 @@
+import { useDispatch } from "react-redux";
 import { NavLink, useLocation } from "react-router-dom";
 import Pattern from "../../assets/icon/Active-Pattern.svg";
 import GraphOrangeIcon from "../../assets/icon/Graph-Orange.svg";
@@ -13,10 +14,12 @@ import NotificationWhiteIcon from "../../assets/icon/Notification-White.svg";
 import Logo from "../../assets/icon/Restaurant.svg";
 import SettingOrangeIcon from "../../assets/icon/Setting-Orange.svg";
 import SettingWhiteIcon from "../../assets/icon/Setting-White.svg";
+import { logout } from "../../redux/action";
 import "./SideBar.css";
 
 function SideBar() {
   const location = useLocation();
+  const dispatch = useDispatch()
   const listTab = [
     {
       iconWhite: HomeWhiteIcon,
@@ -49,6 +52,13 @@ function SideBar() {
       navigate: "/login",
     },
   ];
+
+  function handleLogout(item){
+  console.log(item);
+    if(item.navigate === "/login"){
+      dispatch(logout());
+    }
+  }
   return (
     <>
       <div className="container-sidebar">
@@ -56,7 +66,7 @@ function SideBar() {
           <img src={Logo} alt="Logo" />
         </div>
         {listTab.map((item) => (
-          <NavLink to={item.navigate}>
+          <NavLink to={item.navigate} onClick={() => handleLogout(item)}>
             <div
               className={
                 "item-sidebar" +

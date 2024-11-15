@@ -21,6 +21,8 @@ import ProductManager from "../pages/Setting/ProductManager";
 import UpdateInformation from "../pages/Setting/UpdateInformation";
 import SignUp from "../pages/SignUp";
 
+const userData = localStorage.getItem("userData");
+
 export const routes = [
   {
     path: "/",
@@ -99,7 +101,7 @@ export const routes = [
             element: <AddFood />,
           },
           {
-            path: "/setting/product-manager/edit-food",
+            path: "/setting/product-manager/edit-food/:slug",
             element: <EditFood />,
           },
         ],

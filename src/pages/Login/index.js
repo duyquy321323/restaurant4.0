@@ -29,6 +29,7 @@ function Login(props) {
   };
   const LoginApi = (email,password) => {
     return api.post("users/login", {email,password});
+    return api.post("users/login", {email,password});
   }
 //   const handleLoginSubmit = async (event) => {
 //     event.preventDefault();
