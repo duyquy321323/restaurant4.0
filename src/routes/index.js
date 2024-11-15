@@ -61,7 +61,7 @@ export const routes = [
         element: <Menu />,
       },
       {
-        path: "/detail-food",
+        path: "/detail-food/:slug",
         element: <DetailFood />,
       },
       {
