@@ -7,211 +7,26 @@ import Food5 from "../../assets/image/Image 6.svg";
 import Food6 from "../../assets/image/Image 7.svg";
 import Food7 from "../../assets/image/Image 8.svg";
 import Food8 from "../../assets/image/Image 9.svg";
+import api from "../../api";
 import ItemMenu from "../../components/ItemMenu";
+import { useEffect, useState } from "react";
 
 function Menu() {
-  const listItem = [
-    {
-      image: Food1,
-      name: "Spicy seasoned seafood noodles",
-      priceItem: "$ 2.29",
-      quantity: 1,
-      note: "",
-      store: 20,
-      price: 2.29,
-    },
-    {
-      image: Food2,
-      name: "Salted Pasta with mushroom sauce",
-      priceItem: "$ 2.69",
-      quantity: 1,
-      note: "",
-      store: 11,
-      price: 2.69,
-    },
-    {
-      image: Food3,
-      name: "Beef dumpling in hot and sour soup",
-      priceItem: "$ 2.99",
-      quantity: 1,
-      note: "",
-      store: 16,
-      price: 2.99,
-    },
-    {
-      image: Food4,
-      name: "Healthy noodle with spinach leaf",
-      priceItem: "$ 3.29",
-      quantity: 1,
-      note: "",
-      store: 22,
-      price: 3.29,
-    },
-    {
-      image: Food4,
-      name: "Hot spicy fried rice with omelet",
-      priceItem: "$ 3.49",
-      quantity: 1,
-      note: "",
-      store: 13,
-      price: 3.49,
-    },
-    {
-      image: Food5,
-      name: "Spicy instant noodle",
-      priceItem: "$ 3.59",
-      quantity: 1,
-      note: "",
-      store: 17,
-      price: 3.59,
-    },
-    {
-      image: Food6,
-      name: "Healthy noodle with spinach leaf",
-      priceItem: "$ 3.29",
-      quantity: 1,
-      note: "",
-      store: 22,
-      price: 3.29,
-    },
-    {
-      image: Food7,
-      name: "Hot spicy fried rice with omelet",
-      priceItem: "$ 3.49",
-      quantity: 1,
-      note: "",
-      store: 13,
-      price: 3.49,
-    },
-    {
-      image: Food8,
-      name: "Spicy instant noodle with special omelette",
-      priceItem: "$ 3.59",
-      quantity: 1,
-      note: "",
-      store: 17,
-      price: 3.59,
-    },
-    
-    {
-      image: Food4,
-      name: "Healthy noodle with spinach leaf",
-      priceItem: "$ 3.29",
-      quantity: 1,
-      note: "",
-      store: 22,
-      price: 3.29,
-    },
-    {
-      image: Food4,
-      name: "Hot spicy fried rice with omelet",
-      priceItem: "$ 3.49",
-      quantity: 1,
-      note: "",
-      store: 13,
-      price: 3.49,
-    },
-    {
-      image: Food5,
-      name: "Spicy instant noodle",
-      priceItem: "$ 3.59",
-      quantity: 1,
-      note: "",
-      store: 17,
-      price: 3.59,
-    },
-    {
-      image: Food6,
-      name: "Healthy noodle with spinach leaf",
-      priceItem: "$ 3.29",
-      quantity: 1,
-      note: "",
-      store: 22,
-      price: 3.29,
-    },
-    {
-      image: Food7,
-      name: "Hot spicy fried rice with omelet",
-      priceItem: "$ 3.49",
-      quantity: 1,
-      note: "",
-      store: 13,
-      price: 3.49,
-    },
-    {
-      image: Food8,
-      name: "Spicy instant noodle with special omelette",
-      priceItem: "$ 3.59",
-      quantity: 1,
-      note: "",
-      store: 17,
-      price: 3.59,
-    },
-    {
-      image: Food4,
-      name: "Healthy noodle with spinach leaf",
-      priceItem: "$ 3.29",
-      quantity: 1,
-      note: "",
-      store: 22,
-      price: 3.29,
-    },
-    {
-      image: Food4,
-      name: "Hot spicy fried rice with omelet",
-      priceItem: "$ 3.49",
-      quantity: 1,
-      note: "",
-      store: 13,
-      price: 3.49,
-    },
-    {
-      image: Food5,
-      name: "Spicy instant noodle",
-      priceItem: "$ 3.59",
-      quantity: 1,
-      note: "",
-      store: 17,
-      price: 3.59,
-    },
-    {
-      image: Food6,
-      name: "Healthy noodle with spinach leaf",
-      priceItem: "$ 3.29",
-      quantity: 1,
-      note: "",
-      store: 22,
-      price: 3.29,
-    },
-    {
-      image: Food7,
-      name: "Hot spicy fried rice with omelet",
-      priceItem: "$ 3.49",
-      quantity: 1,
-      note: "",
-      store: 13,
-      price: 3.49,
-    },
-    {
-      image: Food5,
-      name: "Spicy instant noodle",
-      priceItem: "$ 3.59",
-      quantity: 1,
-      note: "",
-      store: 17,
-      price: 3.59,
-    },
-    {
-      image: Food6,
-      name: "Healthy noodle with spinach leaf",
-      priceItem: "$ 3.29",
-      quantity: 1,
-      note: "",
-      store: 22,
-      price: 3.29,
-    },
-    
-  ];
+  const [listItem, setListItem] = useState([]);
+ 
+  async function getMenu() {
+    try{
+      const response = await api.get("menu");
+      setListItem(response.data.data);
+    }catch(e){
+      console.error(e);
+    }
+  }
+
+  useEffect(() => {
+    getMenu();
+  }, []);
+
   return (
     <>
       <section className="container-menu">
