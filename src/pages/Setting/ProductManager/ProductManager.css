@@ -68,6 +68,9 @@
     border: 1px dashed var(--Primary-Color, #ea7c69);
     background: var(--Base-Dark-Bg-2, #1f1d2b);
     display: flex;
+    flex-shrink: 1;
+    flex-grow: 1;
+  flex-basis: 238.2px;
     justify-content: center;
     align-items: center;
     flex-direction: column;
@@ -76,8 +79,11 @@
   }
   
   .container-product-management .content-product-management {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    display: flex;
+    /* grid-template-columns: repeat(5, 1fr); */
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-wrap: wrap;
     gap: 16px 16px;
     overflow: auto;
   }

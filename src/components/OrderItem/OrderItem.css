@@ -34,8 +34,8 @@ font-size: 14px;
 font-style: normal;
 font-weight: 500;
 line-height: 130%; /* 18.2px */
-text-wrap: nowrap;
-width: 140px;
+text-wrap: wrap;
+max-width: 140px;
 overflow: hidden;
 text-overflow: ellipsis;
 }

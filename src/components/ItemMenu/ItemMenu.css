@@ -1,6 +1,8 @@
 .container-item-menu {
-  height: 100%;
   position: relative;
+  flex-shrink: 1;
+  flex-grow: 1;
+    flex-basis: 210.2px;
 }
 
 .container-item-menu .item {
@@ -47,6 +49,7 @@
   /* Body / Normal - Medium */
   font-family: Barlow;
   font-size: 20px;
+  max-width: 165px;
   font-style: normal;
   font-weight: 500;
   line-height: 130%; /* 18.2px */

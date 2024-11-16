@@ -4,9 +4,10 @@
   border-radius: 8px;
   position: sticky;
   top: 50px;
-  width: 409px;
+  width: 22.4vw;
   margin-right: 8px;
-  height: 780px;
+  min-height: 90vh;
+  max-height: 92vh;
   margin-left: auto;
   flex-direction: column;
   margin-top: 10px;
@@ -33,7 +34,7 @@
   position: relative;
   width: 100%;
   padding: 24px;
-  gap: 40px;
+  gap: 5vh;
   /* margin:auto; */
 }
 
@@ -101,7 +102,7 @@
   background: var(--Primary-Color, #ea7c69);
   box-shadow: 0px 8px 24px 0px rgba(234, 124, 105, 0.3);
   display: flex;
-  width: 361px;
+  width: calc(100% - 48px);
   padding: 14px;
   justify-content: center;
   align-items: center;
@@ -119,6 +120,8 @@
 .container-shopping-card .footer {
   justify-content: center;
   display: flex;
+  margin-top: auto;
+  height: 5vh;
 }
 
 .container-shopping-card .container-order{
@@ -134,7 +137,7 @@
     justify-content: space-between;
     padding: 0 24px;
     width: 100%;
-    margin-top: 24px;
+    margin-top: 0.5vh;
     margin-bottom: 20px;
 }
 
@@ -167,7 +170,7 @@ line-height: 140%; /* 22.4px */
     overflow-y: auto;
     overflow-x: hidden;
     gap: 24px;
-    height: 430px;
+    max-height: 50vh;
     border-bottom: 1px solid #393C49;
 }
 

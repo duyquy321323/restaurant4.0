@@ -21,14 +21,15 @@ body {
 }
 
 .content-container{
-    flex: 1;  
+    flex: 1;
 }
 
 .component-change{
     display: flex;
-    width: 1330px;
+    width: 69.28%;
 }
 
 .layout-app-container .content-double{
   display: flex;
+  min-height: 100vh;
 }
