@@ -32,6 +32,7 @@
     width: 450px;
     height: 324px;
     top: 0;
+    border-radius: 2px;
     left:0;
 }
 
@@ -67,11 +68,9 @@
 }
 
 .container_detailFood .box2 .add_to_card_button{
-    display: absolute;
     width: 136px;
     height: 44px;
-    margin-top: 51px;
-    margin-left: 689px;
+    cursor: pointer;
 }
 
 .container_detailFood .box2 .rating{
@@ -98,6 +97,7 @@
 .container_detailFood .box1 .sub_img_container .sub_img{
     width: 145px;
     height: 74px;
+    border-radius: 2px;
 }
 
 .text_box{
@@ -110,4 +110,39 @@
     line-height: normal;
     margin-left: 29px;
     margin-top: 30px;
+}
+
+.box-btn-composite{
+    display: flex;
+    justify-content: end;
+    align-content: center;
+    gap: 16px;
+}
+
+.quantity-input{
+    display: flex;
+    gap: 8px;
+}
+
+.quantity-btn{
+    all: unset;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    height: 40px;
+    width: 40px;
+    font-family: Barlow;
+    font-size: 20px;
+    background-color: #1f1d2b;
+    border-radius: 8px;
+    border: 2px solid #404046;
+}
+
+.quantity-field{
+    all: unset;
+    font-family: Barlow;
+    font-size: 20px;
+    text-align: center;
+    width: 60px;
 }

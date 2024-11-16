@@ -39,25 +39,55 @@ export const sumRemoveOrder = (item) => {
   };
 };
 
+export const dialogOpen = (slug) => {
+  return{
+    type: "OPENDIALOG",
+    data: slug,
+  }
+}
+
+export const dialogClose = () => {
+  return{
+    type: "CLOSEDIALOG",
+    data: null,
+  }
+}
+
+const dialogState = {
+  status: false,
+  data: null,
+}
+
+export const dialogAction = (state = dialogState, action) => {
+  switch (action.type) {
+    case "OPENDIALOG":
+      return {status: true, data: action.data};
+    case "CLOSEDIALOG":
+      return {status: false, data: null};
+    default:
+      return state;
+  }
+}
+
 export const orderAction = (state = [], action) => {
   switch (action.type) {
     case "ADDFOODORDER": {
       for (let item of state) {
+        console.log(item);
         if (item.name === action.data.name) {
-          item.quantity++;
-          const priceItem = String(item.priceItem).slice(2);
-          console.log(item.price);
-          item.price = Number(Number(item.price) + Number(priceItem));
+          item.quantity += action.data.quantity;
+          console.log(item.totalPrice);
+          item.totalPrice = Number(Number(item.totalPrice) + Number(action.data.quantity * item.price));
           return [...state];
         }
       }
-      return [...state, action.data];
+      return [...state, {...action.data, totalPrice : Number(action.data.price * action.data.quantity)}];
     }
     case "REMOVEFOODORDER": {
       for (let item of state) {
         if (item.name === action.data.name) {
           item.quantity = 1;
-          item.price = Number(String(item.priceItem).slice(2));
+          item.totalPrice = item.price;
           return state.filter((item) => item.name !== action.data.name);
         }
       }
@@ -71,13 +101,13 @@ export const orderAction = (state = [], action) => {
 export const sumOrderAction = (state = 0, action) => {
   switch (action.type) {
     case "SUMADDORDER": {
+      console.log(action.data);
       return Number(
-        Number(state) + Number(String(action.data.priceItem).slice(2))
+        Number(state) + Number(action.data.price * action.data.quantity)
       );
     }
     case "SUMREMOVEORDER": {
-      console.log(action.data.price);
-      return Number(Number(state) - Number(action.data.price));
+      return Number(Number(state) - Number(action.data.totalPrice));
     }
     default:
       return state;
@@ -114,9 +144,17 @@ export const closePayment = () => {
 export const paymentAction = (state = false, action) => {
   switch (action.type) {
     case "OPEN":
-      return true;
+      {
+        const body = document.querySelector('body');
+        body.style.overflow = 'hidden';
+        return true;
+      }
     case "CLOSE":
-      return false;
+      {
+        const body = document.querySelector('body');
+        body.style.overflow = 'auto';
+        return false;
+      }
     default:
       return state;
   }
@@ -143,3 +181,26 @@ export const confirmAddressAction = (state = false, action) => {
       return state;
   }
 };
+
+export const openBackDrop = () => {
+  return {
+    type: 'OPENBACKDROP',
+  }
+}
+
+export const closeBackDrop = () => {
+  return {
+    type: 'CLOSEBACKDROP',
+  }
+}
+
+export const backdropAction = (state = false, action) => {
+  switch (action.type) {
+    case "OPENBACKDROP":
+      return true;
+      case "CLOSEBACKDROP":
+        return false;
+    default:
+      return state;
+  }
+}

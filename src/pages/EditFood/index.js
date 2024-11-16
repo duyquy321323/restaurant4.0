@@ -1,14 +1,35 @@
+import { Backdrop, CircularProgress } from "@mui/material";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
 import api from "../../api";
 import ImageIcon from "../../assets/icon/Vector.svg";
+import { closeBackDrop, openBackDrop } from "../../redux/action";
 
 function EditFood() {
   const { slug } = useParams(); // lấy id của food qua tên miền
-  const [food, setFood] = useState({});
-  function handleSubmit(e) {
+  const [food, setFood] = useState({
+    name: "",
+    price: "",
+    description: "",
+    file: null,
+    category: "",
+  });
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const open = useSelector((state) => state.backdropAction);
+
+  async function handleSubmit(e) {
     e.preventDefault();
-    console.log(e);
+    console.log(food);
+    try {
+      dispatch(openBackDrop());
+      await api.patch(`admin/dish/edit/${slug}`, food);
+      dispatch(closeBackDrop());
+      navigate("/setting/product-manager");
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   useEffect(() => {
@@ -24,17 +45,29 @@ function EditFood() {
     getDish();
   }, [slug]);
 
-  function handleChange(e){
-    console.log(e);
-    const {name, value} = e.target;
-    setFood(prev => ({
-      ...prev,
-      [name]: value,  
-    }))
+  function handleChange(e) {
+    const { name, value } = e.target;
+    if (name !== "file") {
+      setFood((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    } else {
+      setFood((prev) => ({
+        ...prev,
+        [name]: e.target.files[0],
+      }));
+    }
   }
 
   return (
     <>
+      <Backdrop
+        sx={(theme) => ({ color: "#fff", zIndex: theme.zIndex.drawer + 1 })}
+        open={open}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
       <div className="container-product-management">
         <h1 className="title-product-management">Edit dish</h1>
         <div className="main-form-ui">
@@ -60,6 +93,7 @@ function EditFood() {
                 className="ui-inp"
                 name="description"
                 defaultValue={food.description}
+                onChange={handleChange}
                 placeholder="Enter description of dish"
               />
             </div>
@@ -72,6 +106,8 @@ function EditFood() {
                   name="price"
                   defaultValue={food.price}
                   type="number"
+                  step="0.01"
+                  onChange={handleChange}
                   placeholder="Enter price of dish"
                 />
               </div>
@@ -83,6 +119,7 @@ function EditFood() {
                   name="category"
                   defaultValue={food.category}
                   type="text"
+                  onChange={handleChange}
                   placeholder="Enter category of dish"
                 />
               </div>
@@ -98,12 +135,18 @@ function EditFood() {
                   placeholder=""
                   id="image-and-inp"
                   className="file-input"
+                  name="file"
+                  onChange={handleChange}
                   type="file"
                 />
               </div>
             </div>
             <div className="group-btn group-btn-ui">
-              <button className="discard-changes btn-pro">
+              <button
+                className="discard-changes btn-pro"
+                type="button"
+                onClick={() => navigate("/setting/product-manager")}
+              >
                 Discard Changes
               </button>
               <button className="save-changes btn-pro" type="submit">

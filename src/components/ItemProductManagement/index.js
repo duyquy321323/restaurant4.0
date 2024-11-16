@@ -1,12 +1,20 @@
 import "./ItemProductManagement.css";
 import EditIcon from "../../assets/icon/Edit.svg";
+import { RiDeleteBin5Line } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { dialogOpen } from "../../redux/action";
 
 function ItemProductManagement(props){
     const {item} = props;
     const navigate = useNavigate();
+    const dispatch = useDispatch()
     function handleEditFood(){
         navigate(`/setting/product-manager/edit-food/${item.slug}`);
+    }
+
+    function handleRemoveFood(){
+        dispatch(dialogOpen(item.slug));
     }
     return (
         <>
@@ -20,9 +28,16 @@ function ItemProductManagement(props){
                     <p>&bull;</p>
                     <pre className="store-ipm">{item.store} Bowls</pre>
                 </div>
+                <div className="box-btn">
+
+                <div className="edit-btn-ipm" onClick={handleRemoveFood}>
+                <RiDeleteBin5Line color="#ea7c69" />
+                    <p>Remove</p>
+                </div>
                 <div className="edit-btn-ipm" onClick={handleEditFood}>
                     <img src={EditIcon} alt="EditIcon"/>
-                    <p>Edit dish</p>
+                    <p>Edit</p>
+                </div>
                 </div>
             </div>
         </>

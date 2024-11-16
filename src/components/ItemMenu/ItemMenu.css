@@ -10,6 +10,7 @@
   margin-top: 34.72px;
   display: flex;
   justify-content: center;
+  cursor: pointer;
 }
 
 .container-item-menu .image-item {
@@ -19,6 +20,7 @@
 
 .container-item-menu .image-item .img-food {
   height: 132px;
+  border-radius: 50%;
   width: 132px;
 }
 
@@ -33,7 +35,6 @@
   margin-top: 114px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
   align-items: center;
   margin-left: 24px;
   margin-right: 24px;
@@ -53,6 +54,7 @@
 
 .container-item-menu .content-item .detail-item {
   display: flex;
+  margin-top: auto;
   flex-direction: column;
   gap: 4px;
 }

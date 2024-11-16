@@ -16,15 +16,15 @@ function OrderItem(props) {
       <section className="container-item-order">
         <div className="header-item-order">
             <div className="left-block-item-order">
-                <img src={item.image} alt="FoodImage"/>
+                <img src={item.imageUrl} alt="FoodImage"/>
                 <div className="detail-item-order">
                     <div className="name-item">{item.name}</div>
-                    <div className="price-item">{item.priceItem}</div>
+                    <div className="price-item">{item.price}</div>
                 </div>
             </div>
             <div className="right-block-item-order">
                 <div className="quantity">{item.quantity}</div>
-                <pre className="price-item">$ {Number(item.price).toFixed(2)}</pre>
+                <pre className="price-item">$ {Number(item.totalPrice).toFixed(2)}</pre>
             </div>
         </div>
         <div className="footer-item-order">

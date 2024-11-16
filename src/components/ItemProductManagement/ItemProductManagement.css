@@ -56,7 +56,6 @@
   justify-content: center;
   align-items: center;
   gap: 8px;
-  border-radius: 0px 0px 8px 8px;
   background: var(--Primary-Color, rgb(234, 124, 105, 0.24));
   margin-top: 8px;
   cursor: pointer;
@@ -74,4 +73,15 @@
   font-style: normal;
   font-weight: 600;
   line-height: 140%; /* 19.6px */
+}
+
+.container-ipm .box-btn{
+  display: flex;
+  width: 100%;
+  border-radius: 0px 0px 8px 8px;
+  overflow: hidden;
+}
+
+.container-ipm .box-btn .edit-btn-ipm:first-child{
+  border-right: 1px solid #d15e4a;
 }

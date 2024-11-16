@@ -1,39 +1,90 @@
-import "./Menu.css";
-import Food1 from "../../assets/image/Image 1.svg";
-import Food2 from "../../assets/image/Image 2.svg";
-import Food3 from "../../assets/image/Image 3.svg";
-import Food4 from "../../assets/image/Images.svg";
-import Food5 from "../../assets/image/Image 6.svg";
-import Food6 from "../../assets/image/Image 7.svg";
-import Food7 from "../../assets/image/Image 8.svg";
-import Food8 from "../../assets/image/Image 9.svg";
+import { useEffect, useState } from "react";
 import api from "../../api";
 import ItemMenu from "../../components/ItemMenu";
-import { useEffect, useState } from "react";
+import "./Menu.css";
+import { Backdrop, CircularProgress } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { closeBackDrop, openBackDrop } from "../../redux/action";
 
 function Menu() {
   const [listItem, setListItem] = useState([]);
- 
-  async function getMenu() {
-    try{
-      const response = await api.get("menu");
-      setListItem(response.data.data);
-    }catch(e){
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+  const dispatch = useDispatch();
+  const open = useSelector(state => state.backdropAction);
+
+  async function getMenu(newPage = page) {
+    try {
+      dispatch(openBackDrop());
+      const response = await api.get(
+        `menu?keyword=&sortKey=&sortValue=&page=${newPage}`
+      );
+      const data = response.data.data;
+      if (Array.isArray(data) && data.length > 0) {
+        data.forEach(item => {
+          item.quantity = 1;
+          item.totalPrice = item.price;
+        })
+        console.log(data);
+        setListItem((prev) => [...prev, ...data]);
+      }
+      else {
+        setHasMore(false); // Không còn dữ liệu mới
+      }
+      dispatch(closeBackDrop());
+    } catch (e) {
       console.error(e);
+      setHasMore(false);
     }
   }
+
+  console.log(listItem);
 
   useEffect(() => {
     getMenu();
   }, []);
 
+  // Lắng nghe sự kiện scroll của window
+  useEffect(() => {
+    if (!hasMore) return;
+    const handleScroll = () => {
+      const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+      // Kiểm tra nếu người dùng cuộn xuống cách đáy màn hình chính <= 100px
+      if (scrollTop + clientHeight >= scrollHeight - 100) {
+        setPage((prevPage) => {
+          const newPage = prevPage + 1;
+          getMenu(newPage);
+          return newPage;
+        });
+      }
+    };
+
+    // Thêm sự kiện scroll vào window
+    window.addEventListener("scroll", handleScroll);
+
+    // Cleanup sự kiện khi component bị hủy
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [hasMore]);
+
   return (
     <>
+    <Backdrop
+        sx={(theme) => ({ color: "#fff", zIndex: theme.zIndex.drawer + 1 })}
+        open={open}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
       <section className="container-menu">
         <div className="title-menu">Choose Dishes</div>
+        {listItem.length > 0?
         <div className="content-menu">
-          {listItem.map((item) => <ItemMenu item={item}/>)}
-        </div>
+          {listItem.map((item, index) => (
+            <ItemMenu key={index} item={item} />
+          ))}
+        </div> : <></>
+        }
       </section>
     </>
   );

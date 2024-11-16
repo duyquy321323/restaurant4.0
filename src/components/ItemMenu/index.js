@@ -9,13 +9,13 @@ function ItemMenu(props) {
   const dispatch = useDispatch();
   const navigate = useNavigate()
 
-  function handleClick() {
+  function handleClick(e) {
     dispatch(addFoodOrder(item));
     dispatch(sumAddOrder(item));
+    e.stopPropagation()
   }
-  console.log(item);
 
-  function handleDetails(){
+  function handleDetails(e){
     navigate(`/detail-food/${item.slug}`)
   }
   return (

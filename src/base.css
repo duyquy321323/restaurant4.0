@@ -39,6 +39,10 @@ body {
   font-size: 1.6rem;
   font-family: var(--font-Inter);
   overflow-x: hidden;
+  user-select: none;
+  -ms-user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
 }
 
 body::-webkit-scrollbar {
