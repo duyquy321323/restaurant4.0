@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import api from "../../api";
 import BackIcon from "../../assets/icon/Back.svg";
 import CreditCardIcon from "../../assets/icon/Card.svg";
 import OkIcon from "../../assets/icon/OkIcon.svg";
 import PaypalIcon from "../../assets/icon/Paypal.svg";
-import PlusIcon from "../../assets/icon/Plus 24px White.svg";
 import CashIcon from "../../assets/icon/Wallet.svg";
 import { closeConfirmAddress, closePayment, openConfirmAddress } from "../../redux/action";
 import OrderItem from "../OrderItem";
@@ -15,6 +15,8 @@ function Payment() {
   const totalPrice = useSelector((state) => state.sumOrderAction);
   const isActive = useSelector((state) => state.paymentAction);
   const isOpenConfirmAddress = useSelector((state) => state.confirmAddressAction);
+  const orderList = useSelector(state => state.orderAction);
+  const sumPrice = useSelector(state => state.sumOrderAction);
   const [selectedMethod, setSelectedMethod] = useState(null);
   const dispatch = useDispatch();
   const listMethodItem = [
@@ -31,6 +33,7 @@ function Payment() {
       name: "Cash",
     },
   ];
+
   function handleSubmit(e) {
     console.log(e);
     e.preventDefault();
@@ -54,6 +57,31 @@ function Payment() {
 
   function handleSubmitForm2(e){
     console.log(e);
+  }
+
+  async function payment(order){
+    try{
+      const response = await api.post(`order/payment`, order);
+      window.location.href = response.data.checkoutUrl;
+    }catch(e){
+      console.error(e);
+    }
+  }
+
+  function handlePayment(){
+    const listItem = Array.from(orderList).map(item => ({
+      name: item.name,
+      quantity: item.quantity,
+      price: item.price,
+      imageUrl: item.imageUrl,
+      dish_id: item._id,
+    }));
+    const order = {
+      amount: Number(Number(sumPrice).toFixed(0)),
+      items: listItem,
+    }
+
+    payment(order);
   }
 
   return (
@@ -205,7 +233,7 @@ function Payment() {
                     <button className="cancel-btn" type="button" onClick={handleCloseConfirmAddress}>
                       Cancel
                     </button>
-                    <button className="confirm-btn" type="button" onClick={handleContinue}>Continue</button>
+                    <button className="confirm-btn" type="button" onClick={handlePayment}>Continue</button>
                   </div>
                         </form>
         </div>

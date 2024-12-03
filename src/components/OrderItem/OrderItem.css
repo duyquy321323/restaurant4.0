@@ -18,6 +18,7 @@
 .container-item-order .header-item-order .left-block-item-order img{
     height: 40px;
     width: 40px;
+    border-radius: 50%;
 }
 
 .header-item-order .left-block-item-order .detail-item-order{

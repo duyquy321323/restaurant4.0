@@ -5,6 +5,7 @@ import "./Menu.css";
 import { Backdrop, CircularProgress } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { closeBackDrop, openBackDrop } from "../../redux/action";
+import { debounce } from "lodash";
 
 function Menu() {
   const [listItem, setListItem] = useState([]);
@@ -25,7 +26,6 @@ function Menu() {
           item.quantity = 1;
           item.totalPrice = item.price;
         })
-        console.log(data);
         setListItem((prev) => [...prev, ...data]);
       }
       else {
@@ -38,8 +38,6 @@ function Menu() {
     }
   }
 
-  console.log(listItem);
-
   useEffect(() => {
     getMenu();
   }, []);
@@ -47,7 +45,7 @@ function Menu() {
   // Lắng nghe sự kiện scroll của window
   useEffect(() => {
     if (!hasMore) return;
-    const handleScroll = () => {
+    const handleScroll = debounce(() => {
       const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
       // Kiểm tra nếu người dùng cuộn xuống cách đáy màn hình chính <= 100px
       if (scrollTop + clientHeight >= scrollHeight - 100) {
@@ -57,7 +55,7 @@ function Menu() {
           return newPage;
         });
       }
-    };
+    }, 300);
 
     // Thêm sự kiện scroll vào window
     window.addEventListener("scroll", handleScroll);

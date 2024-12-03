@@ -19,7 +19,7 @@ function OrderItem(props) {
                 <img src={item.imageUrl} alt="FoodImage"/>
                 <div className="detail-item-order">
                     <div className="name-item">{item.name}</div>
-                    <div className="price-item">{item.price}</div>
+                    <div className="price-item">$ {item.price}</div>
                 </div>
             </div>
             <div className="right-block-item-order">

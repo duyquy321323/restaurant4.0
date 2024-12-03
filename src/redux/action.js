@@ -73,10 +73,8 @@ export const orderAction = (state = [], action) => {
   switch (action.type) {
     case "ADDFOODORDER": {
       for (let item of state) {
-        console.log(item);
-        if (item.name === action.data.name) {
+        if (item.slug === action.data.slug) {
           item.quantity += action.data.quantity;
-          console.log(item.totalPrice);
           item.totalPrice = Number(Number(item.totalPrice) + Number(action.data.quantity * item.price));
           return [...state];
         }
@@ -85,7 +83,7 @@ export const orderAction = (state = [], action) => {
     }
     case "REMOVEFOODORDER": {
       for (let item of state) {
-        if (item.name === action.data.name) {
+        if (item.slug === action.data.slug) {
           item.quantity = 1;
           item.totalPrice = item.price;
           return state.filter((item) => item.name !== action.data.name);
@@ -101,7 +99,6 @@ export const orderAction = (state = [], action) => {
 export const sumOrderAction = (state = 0, action) => {
   switch (action.type) {
     case "SUMADDORDER": {
-      console.log(action.data);
       return Number(
         Number(state) + Number(action.data.price * action.data.quantity)
       );

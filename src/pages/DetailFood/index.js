@@ -89,7 +89,7 @@ function DetailFood() {
         <div className="box1">
           <img
             className="img_main"
-            src={food ? food.imageUrl : <></>}
+            src={food ? food.imageUrl : ""}
             alt="image_detail"
           />
           <div className="sub_img_container">
