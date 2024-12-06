@@ -6,6 +6,7 @@ import Layout5 from "../components/Layouts/Layout5";
 import SettingLayout from "../components/Layouts/SettingLayout";
 import AddFood from "../pages/AddFood";
 import BookTable from "../pages/BookTable";
+import CancelPayment from "../pages/CancelPayment";
 import DashBoard from "../pages/DashBoard";
 import DetailFood from "../pages/DetailFood";
 import EditFood from "../pages/EditFood";
@@ -20,6 +21,7 @@ import Notification from "../pages/Notification";
 import ProductManager from "../pages/Setting/ProductManager";
 import UpdateInformation from "../pages/Setting/UpdateInformation";
 import SignUp from "../pages/SignUp";
+import SuccessPayment from "../pages/SuccessPayment";
 
 const userData = localStorage.getItem("userData");
 
@@ -121,6 +123,14 @@ export const routes = [
         element: <History />,
       },
     ],
+  },
+  {
+    path: '/success-payment',
+    element: <SuccessPayment/>
+  },
+  {
+    path: '/cancel-payment',
+    element: <CancelPayment/>
   },
   {
     path: "*",

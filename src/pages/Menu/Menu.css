@@ -1,17 +1,14 @@
 .container-menu{
     display: flex;
     flex-direction: column;
+    width: 100%;
 }
 
 .container-menu .content-menu{
-    /* display: grid;
-    grid-template-columns: repeat(5, 238.2px);
-    grid-template-rows: repeat(3, 280.8px);
-    gap: 24px 28px; */
     display: flex;
     flex-wrap: wrap;
-    flex-shrink: 1;
     gap :28px;
+    flex-direction: row;
     margin-left: 24px;
 }
 

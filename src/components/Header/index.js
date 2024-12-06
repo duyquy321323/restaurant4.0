@@ -11,45 +11,45 @@ function Header() {
     },
     {
       path: "/dashboard",
-      title: "DashBoard",
+      title: "Trang chủ",
     },
     {
       path: "/notification",
-      title: "Notification",
+      title: "Thông báo",
     },
     {
       path: "/setting",
-      title: "Setting",
+      title: "Cài đặt",
     },
     {
       path: "/history",
-      title: "History",
+      title: "Lịch sử",
     },
   ];
 
   const date = new Date();
   const listDay = [
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-    "Sunday",
+    "Thứ Hai",
+    "Thứ Ba",
+    "Thứ Tư",
+    "Thứ Năm",
+    "Thứ Sáu",
+    "Thứ Bảy",
+    "Chủ Nhật",
   ];
   const listMonth = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
+    "Tháng 1",
+    "Tháng 2",
+    "Tháng 3",
+    "Tháng 4",
+    "Tháng 5",
+    "Tháng 6",
+    "Tháng 7",
+    "Tháng 8",
+    "Tháng 9",
+    "Tháng 10",
+    "Tháng 11",
+    "Tháng 12",
   ];
   return (
     <>
@@ -80,7 +80,7 @@ function Header() {
           <input
             type="text"
             className="search-bar"
-            placeholder="Search for food, coffe, etc.."
+            placeholder="Tìm kiếm thức ăn, ..."
           />
           <img src={SearchIcon} alt="Search Icon" />
         </div>

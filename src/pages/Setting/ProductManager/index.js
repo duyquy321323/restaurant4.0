@@ -12,7 +12,7 @@ import "./ProductManager.css";
 
 function ProductManager(){
 
-    const listNav = ["Main Course", "Appetizer", "Dessert", "Drink"]; // Danh sách các danh mục
+    const listNav = ["Món Chính", "Món Khai Vị", "Món Tráng Miệng", "Thức Uống"]; // Danh sách các danh mục
     const listNavPath = ["main-course", "appetizer", 'dessert', 'drink']; // Danh sách các slug theo danh mục
     const [listFood, setListFood] = useState([]);
     const [page, setPage] = useState(1);
@@ -135,17 +135,17 @@ function ProductManager(){
       </Backdrop>
         <AlertDialogSlide onRemove={handleRemove}/>
             <div className="container-product-management">
-                <h1 className="title-product-management">Products Management</h1>
+                <h1 className="title-product-management">Quản lý thức ăn</h1>
                 <div className="nav-bar-product-management">
                     {listNav.map((item, index) => <div className={"item" + index} onClick={handleActive}>{item}</div>)}
                 </div>
                 <div ref={componentRef} className="content-product-management">
+                <div className="add-frame" onClick={handleAddNewFood}>
+                        <img src={PlusIcon} alt="PlusIcon"/>
+                        <h2 className="placeholder-btn">Thêm thức ăn mới</h2>
+                    </div>
                     {listFood.length > 0? 
                     <>
-                    <div className="add-frame" onClick={handleAddNewFood}>
-                        <img src={PlusIcon} alt="PlusIcon"/>
-                        <h2 className="placeholder-btn">Add new dish</h2>
-                    </div>
                     {listFood.map((item) => <ItemProductManagement item={item} />)}
                     </> : <></>
                 }

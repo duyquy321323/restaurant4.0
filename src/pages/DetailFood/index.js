@@ -105,7 +105,7 @@ function DetailFood() {
               <img className="star" src={item} />
             ))}
           </div>
-          <div className="price">{formatPrice(food ? food.price : "")}</div>
+          <div className="price">{food ? food.price : ""}đ</div>
           <div className="description">{food ? food.description : <></>}</div>
           <div className="box-btn-composite">
           <div className="quantity-input">

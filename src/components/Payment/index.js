@@ -9,6 +9,7 @@ import CashIcon from "../../assets/icon/Wallet.svg";
 import { closeConfirmAddress, closePayment, openConfirmAddress } from "../../redux/action";
 import OrderItem from "../OrderItem";
 import "./Payment.css";
+import { useSearchParams } from "react-router-dom";
 
 function Payment() {
   const listItem = useSelector((state) => state.orderAction);
@@ -18,11 +19,16 @@ function Payment() {
   const orderList = useSelector(state => state.orderAction);
   const sumPrice = useSelector(state => state.sumOrderAction);
   const [selectedMethod, setSelectedMethod] = useState(null);
+  const [searchParam] = useSearchParams();
+  const orderType = searchParam.get("order-type");
+  const [deliveryTime, setDeliveryTime] = useState();
+  const [address, setAddress] = useState();
   const dispatch = useDispatch();
+  console.log(orderType)
   const listMethodItem = [
     {
       icon: CreditCardIcon,
-      name: "Credit Card",
+      name: "Thẻ Tín Dụng",
     },
     {
       icon: PaypalIcon,
@@ -30,7 +36,7 @@ function Payment() {
     },
     {
       icon: CashIcon,
-      name: "Cash",
+      name: "Tiền Mặt",
     },
   ];
 
@@ -62,7 +68,7 @@ function Payment() {
   async function payment(order){
     try{
       const response = await api.post(`order/payment`, order);
-      window.location.href = response.data.checkoutUrl;
+      window.location.href = response.data.paymentLinkRes.checkoutUrl;
     }catch(e){
       console.error(e);
     }
@@ -79,8 +85,10 @@ function Payment() {
     const order = {
       amount: Number(Number(sumPrice).toFixed(0)),
       items: listItem,
+      orderType: orderType,
+      deliveryTime: deliveryTime,
+      address: address,
     }
-
     payment(order);
   }
 
@@ -97,8 +105,8 @@ function Payment() {
             <div className="main-form-payment">
               <div className="header-payment">
                 <div className="box-title-payment">
-                  <h1 className="title-payment">Confirmation</h1>
-                  <h2 className="title-payment-small">Order</h2>
+                  <h1 className="title-payment">Xác nhận</h1>
+                  <h2 className="title-payment-small">Đơn hàng</h2>
                 </div>
               </div>
               <div className="content-payment">
@@ -107,8 +115,8 @@ function Payment() {
                 ))}
               </div>
               <div className="footer-payment">
-                <h3>Sub total</h3>
-                <p>${Number(totalPrice).toFixed(2)}</p>
+                <h3>Tổng số tiền</h3>
+                <p>{Number(totalPrice)}đ</p>
               </div>
             </div>
           </div>
@@ -116,14 +124,14 @@ function Payment() {
             <div className="main-form-payment">
               <div className="header-payment">
                 <div className="box-title-payment">
-                  <h1 className="title-payment">Payment</h1>
+                  <h1 className="title-payment">Thanh toán</h1>
                   <h2 className="title-payment-small">
-                    3 payment method available
+                    3 phương thức thanh toán khả dụng
                   </h2>
                 </div>
               </div>
               <div className="content-payment">
-                <h2 className="title-form-payment">Payment Method</h2>
+                <h2 className="title-form-payment">Phương Thức Thanh Toán</h2>
                 <div className="methods-payment">
                   {listMethodItem.map((item) => (
                     <div
@@ -142,30 +150,30 @@ function Payment() {
                 <form onSubmit={handleSubmit}>
                   <div className="top-form-payment">
                     <div className="card-name-payment">
-                      <label htmlFor="">Cardholder Name</label>
+                      <label htmlFor="">Tên chủ sở hữu</label>
                       <input
                         type="text"
                         name="card-name"
-                        placeholder="Enter your cardholder name"
+                        placeholder="Nhập tên thẻ của bạn"
                       />
                     </div>
                     <div className="card-name-payment">
-                      <label htmlFor="">Card Number</label>
+                      <label htmlFor="">Số thẻ</label>
                       <input
                         type="number"
                         name="card-number"
-                        placeholder="Enter your card number"
+                        placeholder="Nhập số thẻ của bạn"
                       />
                     </div>
                   </div>
                   <div className="bot-form-payment">
                     <div className="box-double-input">
                       <div className="card-name-payment">
-                        <label htmlFor="">Expiration Date</label>
+                        <label htmlFor="">Ngày hết hạn</label>
                         <input
                           type="date"
                           name="card-expiration-date"
-                          placeholder="Choose expiration date"
+                          placeholder="Ngày hết hạn của thẻ"
                         />
                       </div>
                       <div className="card-name-payment">
@@ -173,24 +181,24 @@ function Payment() {
                         <input
                           type="password"
                           name="card-cvv"
-                          placeholder="Enter your cvv"
+                          placeholder="Nhập số cvv in trên thẻ"
                         />
                       </div>
                     </div>
                     <div className="card-name-payment">
-                      <label htmlFor="">Transfer Content</label>
+                      <label htmlFor="">Nội dung chuyển tiền</label>
                       <input
                         type="text"
                         name="card-expiration-date"
-                        placeholder="Enter transfer content"
+                        placeholder="Nhập nội dung"
                       />
                     </div>
                   </div>
                   <div className="box-btn-payment">
                     <button className="cancel-btn" type="button" onClick={handleClose}>
-                      Cancel
+                      Hủy bỏ
                     </button>
-                    <button className="confirm-btn" type="submit" onClick={handleContinue}>Continue</button>
+                    <button className="confirm-btn" type="submit" onClick={orderType && orderType === "Delivery"? handleContinue : handlePayment}>{orderType && orderType === "Delivery"? "Tiếp tục" : "Thanh Toán"}</button>
                   </div>
                 </form>
               </div>
@@ -198,45 +206,36 @@ function Payment() {
             </div>
           </div>
         </div>
+        {orderType && orderType === "Delivery"?
         <div className={"container-confirm-address" + (isOpenConfirmAddress? " confirm-active" : "")}>
-        {/* <button className="back-up-payment" onClick={handleCloseConfirmAddress}>
-              <img src={BackIcon} alt="BackIcon" />
-        </button> */}
-        <h1 className="title-confirm-address">Confirm Address</h1>
+        <h1 className="title-confirm-address">Xác nhận thông tin giao hàng</h1>
         <form onSubmit={handleSubmitForm2}>
 
         <div className="card-name-payment">
-                      <label htmlFor="">Name</label>
+                      <label htmlFor="">Chọn thời gian giao</label>
                       <input
-                        type="text"
-                        name="card-name"
-                        placeholder="Enter your name"
+                        type="datetime-local"
+                        name="confirm-time"
+                        onChange={(e) => setDeliveryTime(e.target.value)}
                         />
                     </div>
         <div className="card-name-payment">
-                      <label htmlFor="">Address</label>
+                      <label htmlFor="">Địa chỉ</label>
                       <input
                         type="text"
-                        name="card-name"
-                        placeholder="Enter your address"
-                        />
-                    </div>
-        <div className="card-name-payment">
-                      <label htmlFor="">Phone Number</label>
-                      <input
-                        type="text"
-                        name="card-name"
-                        placeholder="Enter your phone number"a
+                        name="confirm-address"
+                        placeholder="Nhập địa chỉ"
+                        onChange={(e) => setAddress(e.target.value)}
                         />
                     </div>
                     <div className="box-btn-payment form2">
                     <button className="cancel-btn" type="button" onClick={handleCloseConfirmAddress}>
-                      Cancel
+                      Quay lại
                     </button>
-                    <button className="confirm-btn" type="button" onClick={handlePayment}>Continue</button>
+                    <button className="confirm-btn" type="button" onClick={handlePayment}>Thanh toán</button>
                   </div>
                         </form>
-        </div>
+        </div> : <></>}
         </div>
       </div>
     </>

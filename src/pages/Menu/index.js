@@ -75,7 +75,7 @@ function Menu() {
         <CircularProgress color="inherit" />
       </Backdrop>
       <section className="container-menu">
-        <div className="title-menu">Choose Dishes</div>
+        <div className="title-menu">Chọn thức ăn</div>
         {listItem.length > 0?
         <div className="content-menu">
           {listItem.map((item, index) => (

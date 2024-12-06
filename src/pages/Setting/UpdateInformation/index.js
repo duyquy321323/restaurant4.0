@@ -31,7 +31,7 @@ function UpdateInformation() {
   }
 
   function handleDiscard(e) {
-    console.log(e);
+    getInformation();
   }
 
   async function getInformation() {
@@ -66,11 +66,11 @@ function UpdateInformation() {
         <CircularProgress color="inherit" />
       </Backdrop>
       <div className="container-product-management">
-        <div className="title-product-management">Update Information</div>
+        <div className="title-product-management">Cập nhật thông tin cá nhân</div>
         <div className="main-form-ui">
           <form onSubmit={handleSubmit}>
             <div className="box-inp">
-              <label htmlFor="name-ui-inp">Name</label>
+              <label htmlFor="name-ui-inp">Họ và tên</label>
               <input
                 id="name-ui-inp"
                 className="ui-inp"
@@ -82,7 +82,7 @@ function UpdateInformation() {
               />
             </div>
             <div className="box-inp">
-              <label htmlFor="address-ui-inp">Address</label>
+              <label htmlFor="address-ui-inp">Địa chỉ</label>
               <input
                 id="address-ui-inp"
                 className="ui-inp"
@@ -95,7 +95,7 @@ function UpdateInformation() {
             </div>
             <div className="grid-2-col box-grid">
               <div className="box-inp">
-                <label htmlFor="phone-ui-inp">Phone number</label>
+                <label htmlFor="phone-ui-inp">Số điện thoại</label>
                 <input
                   id="phone-ui-inp"
                   className="ui-inp"
@@ -121,13 +121,14 @@ function UpdateInformation() {
             </div>
             <div className="group-btn group-btn-ui">
               <button
+                type="button"
                 className="discard-changes btn-pro"
                 onClick={handleDiscard}
               >
-                Discard Changes
+                Hủy bỏ
               </button>
               <button className="save-changes btn-pro" type="submit">
-                Save Changes
+                Lưu thay đổi
               </button>
             </div>
           </form>

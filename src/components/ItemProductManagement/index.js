@@ -24,19 +24,19 @@ function ItemProductManagement(props){
                 </div>
                 <h1 className="title-ipm">{item.name}</h1>
                 <div className="detail-ipm">
-                    <pre className="price-ipm">$ {item.price}</pre>
+                    <pre className="price-ipm">{item.price}đ</pre>
                     <p>&bull;</p>
-                    <pre className="store-ipm">{item.store} Bowls</pre>
+                    <pre className="store-ipm">{item.store} Mỗi Phần</pre>
                 </div>
                 <div className="box-btn">
 
                 <div className="edit-btn-ipm" onClick={handleRemoveFood}>
                 <RiDeleteBin5Line color="#ea7c69" />
-                    <p>Remove</p>
+                    <p>Xóa</p>
                 </div>
                 <div className="edit-btn-ipm" onClick={handleEditFood}>
                     <img src={EditIcon} alt="EditIcon"/>
-                    <p>Edit</p>
+                    <p>Sửa</p>
                 </div>
                 </div>
             </div>

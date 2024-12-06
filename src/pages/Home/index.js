@@ -7,8 +7,8 @@ const ActionButtons = () => {
     <div className="action-container"> 
       <div className="action-buttons">
         <CiTimer className='icon' /> 
-        <button className="action-btn" onClick={() => navigate("/menu")}>Menu</button>
-        <button className="action-btn1" onClick={() => navigate("/menu")}>Getting delivery</button>
+        <button className="action-btn" onClick={() => navigate("/menu?order-type=Dine In")}>Menu</button>
+        <button className="action-btn1" onClick={() => navigate("/menu?order-type=Delivery")}>Getting delivery</button>
         <button className="action-btn2" onClick={() => navigate("/book-table")} >Book a table</button>
       </div>
     </div>

@@ -12,15 +12,15 @@ function SettingLayout() {
     {
       iconGray: HeartGray,
       iconOrange: HeartOrange,
-      title: "Update Information",
-      detail: "Name, Address and Phone number, etc",
+      title: "Cập nhật thông tin cá nhân",
+      detail: "Cập nhật tên, địa chỉ, số điện thoại, v.v",
       pathname: "/update-information",
     },
     {
       iconGray: DiscountGray,
       iconOrange: DiscountOrange,
-      title: "Products Management",
-      detail: "Manage your product, pricing, etc",
+      title: "Quản lý thức ăn",
+      detail: "Quản lý thức ăn của bạn, giá tiền, v.v",
       pathname: "/product-manager",
     },
   ];

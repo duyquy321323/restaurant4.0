@@ -28,8 +28,8 @@ function ItemMenu(props) {
       <div className="content-item">
         <h1 className="name">{item.name}</h1>
         <div className="detail-item">
-          <p className="price-item">${item.price}</p>
-          <pre className="store-item">{item.store} Bowls available</pre>
+          <p className="price-item">{item.price}đ</p>
+          <pre className="store-item">{item.store} Món ăn khả dụng</pre>
         </div>
       </div>
       </div>

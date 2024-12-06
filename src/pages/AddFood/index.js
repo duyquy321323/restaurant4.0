@@ -15,6 +15,7 @@ function AddFood() {
     description: "",
     price: "",
     category: "",
+    rating: 4,
   });
   const open = useSelector((state) => state.backdropAction);
   const dispatch = useDispatch();
@@ -65,11 +66,11 @@ function AddFood() {
         <CircularProgress color="inherit" />
       </Backdrop>
       <div className="container-product-management">
-        <h1 className="title-product-management">Add new dish</h1>
+        <h1 className="title-product-management">Thêm thức ăn mới</h1>
         <div className="main-form-ui">
           <form onSubmit={handleSubmit}>
             <div className="box-inp">
-              <label htmlFor="name-and-inp">Name</label>
+              <label htmlFor="name-and-inp">Tên thức ăn</label>
               <input
                 id="name-and-inp"
                 className="ui-inp"
@@ -81,7 +82,7 @@ function AddFood() {
             </div>
             <div className="box-inp">
               <label htmlFor="description-and-inp" className="after-inp">
-                Description
+                Mô tả chi tiết
               </label>
               <textarea
                 id="description-and-inp"
@@ -93,7 +94,7 @@ function AddFood() {
             </div>
             <div className="grid-2-col box-grid-and">
               <div className="box-inp">
-                <label htmlFor="price-and-inp">Price</label>
+                <label htmlFor="price-and-inp">Giá</label>
                 <input
                   id="price-and-inp"
                   className="ui-inp"
@@ -105,7 +106,7 @@ function AddFood() {
                 />
               </div>
               <div className="box-inp">
-                <label htmlFor="amount-and-inp">Category</label>
+                <label htmlFor="amount-and-inp">Loại thức ăn</label>
                 <input
                   id="amount-and-inp"
                   className="ui-inp"
@@ -119,9 +120,9 @@ function AddFood() {
             <div className="box-inp">
               <div className="ui-inp image-inp">
                 <img src={ImageIcon} alt="Image" />
-                <p>Add Image</p>
+                <p>Thêm ảnh</p>
                 <label htmlFor="image-and-inp" className="custom-file-label">
-                  Browse Files
+                  Duyệt file
                 </label>
                 <input
                   placeholder=""
@@ -139,10 +140,10 @@ function AddFood() {
                 type="button"
                 onClick={() => navigate("/setting/product-manager")}
               >
-                Discard Changes
+                Hủy bỏ
               </button>
               <button className="save-changes btn-pro" type="submit">
-                Save Changes
+                Lưu thay đổi
               </button>
             </div>
           </form>

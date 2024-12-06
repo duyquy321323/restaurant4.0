@@ -1,5 +1,5 @@
 import { combineReducers, createStore } from "redux"
-import { account, backdropAction, confirmAddressAction, dialogAction, orderAction, paymentAction, refreshAction, sumOrderAction } from "./action"
+import { account, backdropAction, confirmAddressAction, dialogAction, menuAction, orderAction, paymentAction, refreshAction, sumOrderAction } from "./action"
 
 
 const allReducers = combineReducers({
