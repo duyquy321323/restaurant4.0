@@ -1,4 +1,4 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useLocation } from "react-router-dom";
 import Pattern from "../../assets/icon/Active-Pattern.svg";
 import GraphOrangeIcon from "../../assets/icon/Graph-Orange.svg";
@@ -20,11 +20,12 @@ import "./SideBar.css";
 function SideBar() {
   const location = useLocation();
   const dispatch = useDispatch()
+  const orderType = useSelector(state => state.menuAction);
   const listTab = [
     {
       iconWhite: HomeWhiteIcon,
       iconOrange: HomeOrangeIcon,
-      navigate: "/menu",
+      navigate: `/menu/?order-type=${orderType === "DELIVERY"? "Delivery" : "Dine In"}`,
     },
     {
       iconWhite: GraphWhiteIcon,

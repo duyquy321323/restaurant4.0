@@ -201,3 +201,26 @@ export const backdropAction = (state = false, action) => {
       return state;
   }
 }
+
+export const dineInAction = () => {
+  return {
+    type: "DINE_IN",
+  }
+}
+
+export const deliveryAction = () => {
+  return {
+    type: "DELIVERY",
+  }
+}
+
+export const menuAction = (state = null, action) => {
+  switch(action.type){
+    case "DINE_IN":
+      return "DINE_IN";
+      case "DELIVERY":
+        return "DELIVERY";
+        default:
+          return state;
+  }
+}

@@ -10,6 +10,7 @@ const allReducers = combineReducers({
      confirmAddressAction,
      dialogAction,
      backdropAction,
+     menuAction,
 })
 
 // Hàm tải dữ liệu vào

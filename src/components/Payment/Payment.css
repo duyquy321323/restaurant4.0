@@ -281,9 +281,7 @@ line-height: 130%; /* 18.2px */
 
 .payment-frame .bot-form-payment .box-double-input{
   margin-top: 24px;
-  display: flex;
   gap: 13px;
-  justify-content: space-between;
   padding-bottom: 16px;
   border-bottom: 1px solid #393C49;
 }
@@ -295,7 +293,7 @@ line-height: 130%; /* 18.2px */
 .box-btn-payment{
   display: flex;
   gap: 8px;
-  margin-top: 120px;
+  margin-top: 300px;
   margin-bottom: 24px;
 }
 
