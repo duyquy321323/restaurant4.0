@@ -1,11 +1,11 @@
 import { Backdrop, CircularProgress } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import api from "../../../api";
 import { closeBackDrop, openBackDrop } from "../../../redux/action";
-import "./UpdateInformation.css";
 
-function UpdateInformation() {
+function AddEmployee(){
+
     const open = useSelector(state => state.backdropAction);
     const dispatch = useDispatch();
   const [user, setUser] = useState({
@@ -13,6 +13,7 @@ function UpdateInformation() {
     phone: "",
     email: "",
     address: "",
+    role: "",
   });
 
   async function updateInformation(){
@@ -30,22 +31,6 @@ function UpdateInformation() {
     updateInformation();
   }
 
-  function handleDiscard(e) {
-    getInformation();
-  }
-
-  async function getInformation() {
-    try {
-        dispatch(openBackDrop());
-      const response = await api.get(`users/detail`);
-      console.log(response.data.user);
-      setUser(response.data.user);
-    } catch (e) {
-      console.error(e);
-    }
-    dispatch(closeBackDrop());
-  }
-
   function handleChange(e) {
     const { name, value } = e.target;
     setUser((prev) => ({
@@ -54,19 +39,16 @@ function UpdateInformation() {
     }));
   }
 
-  useEffect(() => {
-    getInformation();
-  }, []);
-  return (
-    <>
-    <Backdrop
+    return(
+        <>
+        <Backdrop
         sx={(theme) => ({ color: "#fff", zIndex: theme.zIndex.drawer + 1 })}
         open={open}
       >
         <CircularProgress color="inherit" />
       </Backdrop>
       <div className="container-product-management">
-        <div className="title-product-management">Cập nhật thông tin cá nhân</div>
+        <div className="title-product-management">Thêm nhân viên mới</div>
         <div className="main-form-ui">
           <form onSubmit={handleSubmit}>
             <div className="box-inp">
@@ -74,11 +56,10 @@ function UpdateInformation() {
               <input
                 id="name-ui-inp"
                 className="ui-inp"
-                defaultValue={user.fullname}
                 onChange={handleChange}
                 name="fullname"
                 type="text"
-                placeholder="Nhập tên của bạn"
+                placeholder="Nhập tên"
               />
             </div>
             <div className="box-inp">
@@ -86,11 +67,10 @@ function UpdateInformation() {
               <input
                 id="address-ui-inp"
                 className="ui-inp"
-                defaultValue={user.address}
                 onChange={handleChange}
                 name="address"
                 type="text"
-                placeholder="Nhập địa chỉ của bạn"
+                placeholder="Nhập địa chỉ"
               />
             </div>
             <div className="grid-2-col box-grid">
@@ -99,11 +79,10 @@ function UpdateInformation() {
                 <input
                   id="phone-ui-inp"
                   className="ui-inp"
-                  defaultValue={user.phone}
                   onChange={handleChange}
                   name="phone"
                   type="text"
-                  placeholder="Nhập số điện thoại của bạn"
+                  placeholder="Nhập số điện thoại"
                 />
               </div>
               <div className="box-inp">
@@ -111,19 +90,27 @@ function UpdateInformation() {
                 <input
                   id="email-ui-inp"
                   className="ui-inp"
-                  value={user.email}
                   name="email"
+                  onChange={handleChange}
                   type="email"
-                  placeholder="Nhập email của bạn"
-                  disabled
+                  placeholder="Nhập email"
                 />
               </div>
             </div>
+            <div className="box-inp">
+                <label htmlFor="role-ui-inp">Role</label>
+                <input
+                  id="role-ui-inp"
+                  className="ui-inp"
+                  name="role"
+                  type="role"
+                  placeholder="Chọn vai trò"
+                />
+              </div>
             <div className="group-btn group-btn-ui">
               <button
                 type="button"
                 className="discard-changes btn-pro"
-                onClick={handleDiscard}
               >
                 Hủy bỏ
               </button>
@@ -134,8 +121,8 @@ function UpdateInformation() {
           </form>
         </div>
       </div>
-    </>
-  );
+        </>
+    );
 }
 
-export default UpdateInformation;
+export default AddEmployee;

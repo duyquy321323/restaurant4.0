@@ -18,6 +18,7 @@ import Login from "../pages/Login";
 import Menu from "../pages/Menu";
 import NotFound from "../pages/NotFound";
 import Notification from "../pages/Notification";
+import AddEmployee from "../pages/Setting/AddEmployee";
 import ProductManager from "../pages/Setting/ProductManager";
 import UpdateInformation from "../pages/Setting/UpdateInformation";
 import SignUp from "../pages/SignUp";
@@ -93,6 +94,10 @@ export const routes = [
           {
             path: "/setting/update-information",
             element: <UpdateInformation />,
+          },
+          {
+            path: "/setting/add-employee",
+            element: <AddEmployee />,
           },
           {
             path: "/setting/product-manager",

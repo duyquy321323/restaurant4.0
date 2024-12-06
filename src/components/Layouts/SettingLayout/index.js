@@ -23,6 +23,13 @@ function SettingLayout() {
       detail: "Quản lý thức ăn của bạn, giá tiền, v.v",
       pathname: "/product-manager",
     },
+    {
+      iconGray: DiscountGray,
+      iconOrange: DiscountOrange,
+      title: "Thêm nhân viên mới",
+      detail: "Thêm nhân viên cho cửa hàng",
+      pathname: "/add-employee",
+    },
   ];
   return (
     <>
