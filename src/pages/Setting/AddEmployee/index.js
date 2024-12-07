@@ -1,34 +1,42 @@
-import { Backdrop, CircularProgress } from "@mui/material";
+import { Backdrop, CircularProgress, InputLabel, MenuItem, Select, Typography } from "@mui/material";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import api from "../../../api";
 import { closeBackDrop, openBackDrop } from "../../../redux/action";
+import { useSnackbar } from "../../../components/SnackbarContext";
 
 function AddEmployee(){
 
     const open = useSelector(state => state.backdropAction);
     const dispatch = useDispatch();
+    const { showSnackbar } = useSnackbar();
   const [user, setUser] = useState({
     fullname: "",
     phone: "",
     email: "",
     address: "",
     role: "",
+    password: '',
   });
 
-  async function updateInformation(){
+  async function createAccount(){
     try{
         dispatch(openBackDrop());
-        await api.patch(`users/edit`, user);
+        await api.post(`admin/accounts/create`, user);
+        showSnackbar("Tạo tài khoản thành công");
     }catch(e){
-        console.error(e);
+      if(e.response.status === 400){
+        showSnackbar("Email đã được sử dụng");
+      } else {
+        showSnackbar("Xảy ra lỗi trong quá trình tạo tài khoản, vui lòng thử lại sau");
+      }
     }
     dispatch(closeBackDrop());
   }
 
   function handleSubmit(e) {
     e.preventDefault();
-    updateInformation();
+    createAccount();
   }
 
   function handleChange(e) {
@@ -60,6 +68,7 @@ function AddEmployee(){
                 name="fullname"
                 type="text"
                 placeholder="Nhập tên"
+                required
               />
             </div>
             <div className="box-inp">
@@ -69,6 +78,7 @@ function AddEmployee(){
                 className="ui-inp"
                 onChange={handleChange}
                 name="address"
+                required
                 type="text"
                 placeholder="Nhập địa chỉ"
               />
@@ -78,6 +88,7 @@ function AddEmployee(){
                 <label htmlFor="phone-ui-inp">Số điện thoại</label>
                 <input
                   id="phone-ui-inp"
+                  required
                   className="ui-inp"
                   onChange={handleChange}
                   name="phone"
@@ -93,20 +104,44 @@ function AddEmployee(){
                   name="email"
                   onChange={handleChange}
                   type="email"
+                  required
                   placeholder="Nhập email"
                 />
               </div>
             </div>
+            <div className="grid-2-col box-grid">
             <div className="box-inp">
-                <label htmlFor="role-ui-inp">Role</label>
-                <input
-                  id="role-ui-inp"
-                  className="ui-inp"
-                  name="role"
-                  type="role"
-                  placeholder="Chọn vai trò"
-                />
+            <InputLabel id="demo-simple-select-label" sx={{height: '18px', color: "white"}} ><Typography fontFamily='Barlow' fontSize='14px' fontWeight='500'>Role</Typography></InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                className="ui-inp"
+                sx={{height: '49.59px'}}
+                name="role"
+                value={user.role}
+                onChange={handleChange}
+                displayEmpty
+                required
+              >
+                <MenuItem value="">-- Chọn role --</MenuItem>
+                <MenuItem value={"admin"}>Admin</MenuItem>
+                <MenuItem value={"staff"}>Staff</MenuItem>
+                <MenuItem value={"delivery"}>Delivery</MenuItem>
+              </Select>
               </div>
+            <div className="box-inp">
+                <label htmlFor="password-ui-inp">Password</label>
+                <input
+                  id="password-ui-inp"
+                  className="ui-inp"
+                  name="password"
+                  onChange={handleChange}
+                  type="password"
+                  placeholder="Nhập mật khẩu"
+                  required
+                  />
+              </div>
+                  </div>
             <div className="group-btn group-btn-ui">
               <button
                 type="button"

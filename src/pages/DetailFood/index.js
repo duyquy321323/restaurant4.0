@@ -1,34 +1,20 @@
-import RightComponent from "../../components/ShoppingCard";
-import "./DetailFood.css";
-import { useDispatch, useStore } from "react-redux";
-import img_detail from "../../assets/image/DetailFoodImg.svg";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
+import api from "../../api";
+import whiteButton from "../../assets/icon/Cart-White.svg";
+import blackStar from "../../assets/image/BlackStar.svg";
 import food1 from "../../assets/image/Detail1.svg";
 import food2 from "../../assets/image/Detail2.svg";
 import food3 from "../../assets/image/Detail3.svg";
-import blackStar from "../../assets/image/BlackStar.svg";
 import yellowStar from "../../assets/image/YellowStar.svg";
-import whiteButton from "../../assets/icon/Cart-White.svg";
-import blackButton from "../../assets/icon/Cart-Black.svg";
-import { addFoodOrder, sumAddOrder } from "../../redux/action";
-import { OtherFood } from "../../components/OtherFood";
-import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
-import api from "../../api";
-function formatPrice(price) {
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-  }).format(price);
-}
-function DetailFood() {
-  const list_food = [
-    { name: "Chao", price: 20000 },
-    { name: "Pho", price: 20000 },
-    { name: "Bun", price: 20000 },
-  ];
-  var price = 20000;
+import { addFoodOrder, closeBackDrop, openBackDrop, sumAddOrder } from "../../redux/action";
+import "./DetailFood.css";
+import { useSnackbar } from "../../components/SnackbarContext";
 
+function DetailFood() {
   const dispatch = useDispatch();
+  const { showSnackbar } = useSnackbar();
 
   function handleAddToCart(e) {
     food.quantity = quantity;
@@ -50,12 +36,13 @@ function DetailFood() {
   const [food, setFood] = useState(null);
   async function getDetailFood() {
     try {
+      dispatch(openBackDrop());
       const response = await api.get(`admin/dish/detail/${param.slug}`);
       setFood(response.data.data);
-      console.log(response.data.data);
     } catch (e) {
-      console.error(e);
+      showSnackbar("Có lỗi xảy ra, vui lòng đăng nhập và thử lại");
     }
+    dispatch(closeBackDrop());
   }
 
   useEffect(() => {

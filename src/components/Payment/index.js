@@ -5,6 +5,7 @@ import api from "../../api";
 import BackIcon from "../../assets/icon/Back.svg";
 import { closeBackDrop, closePayment, openBackDrop } from "../../redux/action";
 import OrderItem from "../OrderItem";
+import { useSnackbar } from "../SnackbarContext";
 import "./Payment.css";
 
 function Payment() {
@@ -19,20 +20,35 @@ function Payment() {
   const orderType = searchParam.get("order-type");
   const [deliveryTime, setDeliveryTime] = useState();
   const [address, setAddress] = useState();
+  const { showSnackbar } = useSnackbar();
   const dispatch = useDispatch();
-  console.log(orderType)
 
   function handleClose() {
     dispatch(closePayment());
   }
   async function payment(order){
     try{
+      dispatch(openBackDrop());
       const response = await api.post(`order/payment`, order);
       window.location.href = response.data.paymentLinkRes.checkoutUrl;
       getInformation();
+      showSnackbar("Tạo QR thanh toán thành công, hãy quét mã để thanh toán đơn hàng");
     }catch(e){
-      console.error(e);
+      if(e.response.status === 400 && e.response.data.error === "Invalid input data"){
+        showSnackbar("Vui lòng chọn món ăn trước khi tiến hành thanh toán");
+      } else if(e.response.status === 400 && e.response.data.message){
+        showSnackbar("Vui lòng chọn địa chỉ và thời gian giao món hợp lệ");
+      } else if(e.response.status === 404){
+        showSnackbar("Vui lòng chọn bàn ăn trước");
+      } else if(e.response.status === 403){
+        showSnackbar("Vui lòng đăng nhập trước");
+      } else if(e.response.status === 500){
+        showSnackbar("Tạo QR thanh toán thất bại, vui lòng thử lại sau");
+      } else {
+        showSnackbar("Có lỗi xảy ra, vui lòng thử lại sau ít phút");
+      }
     }
+    dispatch(closeBackDrop());
   }
 
   async function getInformation() {
@@ -42,7 +58,13 @@ function Payment() {
       setAddress(response.data.user.address);
       setPhone(response.data.user.phone);
     } catch (e) {
-      console.error(e);
+      if(e.response.status === 404){
+        showSnackbar("Tài khoản hiện tại không khả dụng");
+      } else if(e.response.status === 400) {
+        showSnackbar("Vui lòng thử lại sau ít phút");
+      } else {
+        showSnackbar("Lỗi kết nối");
+      }
     }
     dispatch(closeBackDrop());
   }
@@ -51,7 +73,8 @@ function Payment() {
     getInformation();
   }, [])
 
-  function handlePayment(){
+  function handlePayment(e){
+    e.preventDefault();
     const listItem = Array.from(orderList).map(item => ({
       name: item.name,
       quantity: item.quantity,

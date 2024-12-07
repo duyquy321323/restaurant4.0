@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useLocation } from "react-router-dom";
+import api from "../../api";
 import Pattern from "../../assets/icon/Active-Pattern.svg";
 import GraphOrangeIcon from "../../assets/icon/Graph-Orange.svg";
 import GraphWhiteIcon from "../../assets/icon/Graph-White.svg";
@@ -14,12 +15,14 @@ import NotificationWhiteIcon from "../../assets/icon/Notification-White.svg";
 import Logo from "../../assets/icon/Restaurant.svg";
 import SettingOrangeIcon from "../../assets/icon/Setting-Orange.svg";
 import SettingWhiteIcon from "../../assets/icon/Setting-White.svg";
-import { logout } from "../../redux/action";
+import { closeBackDrop, logout, openBackDrop } from "../../redux/action";
+import { useSnackbar } from "../SnackbarContext";
 import "./SideBar.css";
 
 function SideBar() {
   const location = useLocation();
   const dispatch = useDispatch()
+  const { showSnackbar } = useSnackbar();
   const orderType = useSelector(state => state.menuAction);
   const listTab = [
     {
@@ -54,10 +57,21 @@ function SideBar() {
     },
   ];
 
-  function handleLogout(item){
-  console.log(item);
-    if(item.navigate === "/login"){
+  async function logoutApp(){
+    try{
+      dispatch(openBackDrop());
+      await api.get(`users/logout`);
       dispatch(logout());
+      showSnackbar("Đăng xuất thành công");
+    }catch(e){
+      showSnackbar("Đăng xuất thất bại");
+    }
+    dispatch(closeBackDrop());
+  }
+
+  function handleLogout(item){
+    if(item.navigate === "/login"){
+      logoutApp();
     }
   }
   return (

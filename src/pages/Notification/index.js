@@ -2,10 +2,15 @@ import { useEffect } from "react";
 import api from "../../api";
 import SortIcon from "../../assets/icon/Filter.svg";
 import Table from "../../components/Table";
+import { useDispatch } from "react-redux";
+import { useSnackbar } from "../../components/SnackbarContext";
+import { closeBackDrop, openBackDrop } from "../../redux/action";
 
 function Notification(){
 
     // const [listItem, setListItem] = useState();
+    const dispatch = useDispatch();
+    const { showSnackbar } = useSnackbar();
     const listItem = Array(20).fill({
         customer: "Eren Jaegar",
         menuItem: "0373071643",
@@ -15,11 +20,13 @@ function Notification(){
 
     async function getListOrderTable(){
         try{
+            dispatch(openBackDrop());
             const response = await api.get(`admin/tableBooking/list`);
             console.log(response);
         }catch(e){
-            console.error(e);
+            showSnackbar("Lỗi kết nối");
         }
+        dispatch(closeBackDrop());
     }
 
     useEffect(() => {

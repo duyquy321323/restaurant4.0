@@ -1,9 +1,12 @@
+import { useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
 import SearchIcon from "../../assets/icon/Mask.svg";
+import { search } from "../../redux/action";
 import "./Header.css";
 
 function Header() {
   const location = useLocation();
+  const dispatch = useDispatch();
   const listHeader = [
     {
       path: "/menu",
@@ -80,6 +83,7 @@ function Header() {
           <input
             type="text"
             className="search-bar"
+            onChange={(e) => dispatch(search(e.target.value))}
             placeholder="Tìm kiếm thức ăn, ..."
           />
           <img src={SearchIcon} alt="Search Icon" />

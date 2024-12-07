@@ -7,8 +7,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import api from '../../api';
-import { dialogClose, openRefresh } from '../../redux/action';
+import { dialogClose } from '../../redux/action';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -36,12 +35,12 @@ export default function AlertDialogSlide({onRemove}) {
         <DialogTitle>{"Warning"}</DialogTitle>
         <DialogContent>
           <DialogContentText color='#fff' id="alert-dialog-slide-description">
-          Are you sure you want to delete this dish?
+          Bạn có chắc chắn muốn xóa món ăn này không?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => dispatch(dialogClose())}>Cancel</Button>
-          <Button onClick={() => onRemove(state)}>Remove</Button>
+          <Button onClick={() => dispatch(dialogClose())}>Hủy</Button>
+          <Button onClick={() => onRemove(state)}>Xóa</Button>
         </DialogActions>
       </Dialog>
   );

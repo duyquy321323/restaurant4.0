@@ -224,3 +224,19 @@ export const menuAction = (state = null, action) => {
           return state;
   }
 }
+
+export const search = (keyword) => {
+  return {
+    type: 'SEARCH',
+    data: keyword,
+  }
+}
+
+export const searchAction = (state = null, action) => {
+  switch(action.type){
+    case "SEARCH":
+      return action.data;
+      default:
+        return state;
+  }
+}

@@ -9,18 +9,20 @@ import ItemProductManagement from "../../../components/ItemProductManagement";
 import AlertDialogSlide from "../../../components/RemoveModel";
 import { closeBackDrop, dialogClose, openBackDrop } from "../../../redux/action";
 import "./ProductManager.css";
+import { useSnackbar } from "../../../components/SnackbarContext";
 
 function ProductManager(){
 
     const listNav = ["Món Chính", "Món Khai Vị", "Món Tráng Miệng", "Thức Uống"]; // Danh sách các danh mục
     const listNavPath = ["main-course", "appetizer", 'dessert', 'drink']; // Danh sách các slug theo danh mục
     const [listFood, setListFood] = useState([]);
+    const [slugStorage, setSlugStorage] = useState(listNavPath.at(0));
     const [page, setPage] = useState(1);
     const componentRef = useRef(null);
-    const [slugStorage, setSlugStorage] = useState(listNavPath.at(0));
     const navigate = useNavigate();
     const [hasMore, setHasMore] = useState(true);
     const dispatch = useDispatch()
+    const { showSnackbar } = useSnackbar();
     const open = useSelector(state => state.backdropAction);
 
     // Call api lấy thức ăn theo slug
@@ -40,10 +42,11 @@ function ProductManager(){
             }else {
                 setHasMore(false); // Không còn dữ liệu mới
               }
-              dispatch(closeBackDrop());
-        }catch(e){
-            console.error(e);
-        }
+            }catch(e){
+                showSnackbar("Lỗi kết nối");
+                setHasMore(false);
+            }
+            dispatch(closeBackDrop());
     }
     // Action của navbar khi nhấn vào
     function handleActive(e){
@@ -70,7 +73,7 @@ function ProductManager(){
         getFoodByCategory(slugStorage);
     }, [slugStorage])
 
-    function handleAddNewFood(e){
+    function handleAddNewFood(){
         navigate("/setting/product-manager/add-new-food");
     }
 
@@ -91,7 +94,6 @@ function ProductManager(){
         
               if (scrollTop + clientHeight >= scrollHeight - 100) {
                 const newPage = page + 1;
-                console.log('Loading page:', newPage);
                 getFoodByCategory(currentSlug, newPage);
                 setPage(newPage);
               }
@@ -114,15 +116,17 @@ function ProductManager(){
 
     async function handleRemove(state){
         try{
-            console.log(state);
+            dispatch(openBackDrop());
             await api.delete(`admin/dish/delete/${state.data}`);
             dispatch(dialogClose());
             setListFood((prev) => {
                 return prev.filter((item) => item.slug !== state.data);
             })
+            showSnackbar("Xóa món ăn thành công");
         }catch(e){
-            console.error(e);
+            showSnackbar("Xóa món ăn thất bại");
         }
+        dispatch(closeBackDrop());
       }
 
     return(

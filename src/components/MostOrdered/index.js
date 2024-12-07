@@ -2,9 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import MostOrderItem from "../MostOrderItem";
 import Payment from "../Payment";
-import SortIcon from "../../assets/icon/Filter.svg";
 import "./MostOrdered.css";
-import { openPayment } from "../../redux/action";
 function MostOrdered() {
   const location = useLocation();
   //const listItem = useSelector(state => state.orderAction);
@@ -30,10 +28,6 @@ function MostOrdered() {
         <div className="container-order">
           <div className="header">
             <h1 className="title">Most Ordered</h1>
-            {/* <button className="sort-btn-mofood">
-                    <img src={SortIcon} alt="SortIcon"/>
-                    <h2>Filter Order</h2>
-            </button> */}
             <div className="title-order-item">
               <div className="divider"></div>
             </div>

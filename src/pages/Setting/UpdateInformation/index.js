@@ -4,10 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 import api from "../../../api";
 import { closeBackDrop, openBackDrop } from "../../../redux/action";
 import "./UpdateInformation.css";
+import { useSnackbar } from "../../../components/SnackbarContext";
 
 function UpdateInformation() {
     const open = useSelector(state => state.backdropAction);
     const dispatch = useDispatch();
+    const { showSnackbar } = useSnackbar();
   const [user, setUser] = useState({
     fullname: "",
     phone: "",
@@ -19,8 +21,9 @@ function UpdateInformation() {
     try{
         dispatch(openBackDrop());
         await api.patch(`users/edit`, user);
+        showSnackbar("Cập nhật thông tin thành công");
     }catch(e){
-        console.error(e);
+        showSnackbar("Đã xảy ra lỗi, vui lòng thử lại sau");
     }
     dispatch(closeBackDrop());
   }
@@ -38,10 +41,9 @@ function UpdateInformation() {
     try {
         dispatch(openBackDrop());
       const response = await api.get(`users/detail`);
-      console.log(response.data.user);
       setUser(response.data.user);
     } catch (e) {
-      console.error(e);
+      showSnackbar("Lỗi kết nối");
     }
     dispatch(closeBackDrop());
   }
@@ -77,6 +79,7 @@ function UpdateInformation() {
                 defaultValue={user.fullname}
                 onChange={handleChange}
                 name="fullname"
+                required
                 type="text"
                 placeholder="Nhập tên của bạn"
               />
@@ -89,6 +92,7 @@ function UpdateInformation() {
                 defaultValue={user.address}
                 onChange={handleChange}
                 name="address"
+                required
                 type="text"
                 placeholder="Nhập địa chỉ của bạn"
               />
@@ -102,6 +106,7 @@ function UpdateInformation() {
                   defaultValue={user.phone}
                   onChange={handleChange}
                   name="phone"
+                  required
                   type="text"
                   placeholder="Nhập số điện thoại của bạn"
                 />
@@ -115,6 +120,7 @@ function UpdateInformation() {
                   name="email"
                   type="email"
                   placeholder="Nhập email của bạn"
+                  required
                   disabled
                 />
               </div>

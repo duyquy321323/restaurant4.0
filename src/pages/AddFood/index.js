@@ -1,11 +1,12 @@
+import { Backdrop, CircularProgress, InputLabel, MenuItem, Select, Typography } from "@mui/material";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import api from "../../api";
 import ImageIcon from "../../assets/icon/Vector.svg";
-import "./AddFood.css";
-import { Backdrop, CircularProgress } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
 import { closeBackDrop, openBackDrop } from "../../redux/action";
+import "./AddFood.css";
+import { useSnackbar } from "../../components/SnackbarContext";
 
 function AddFood() {
   const navigate = useNavigate();
@@ -20,6 +21,8 @@ function AddFood() {
   const open = useSelector((state) => state.backdropAction);
   const dispatch = useDispatch();
 
+  const { showSnackbar } = useSnackbar()
+
   async function addNewFoodApi() {
     try {
       dispatch(openBackDrop());
@@ -28,17 +31,22 @@ function AddFood() {
           "Content-Type": "multipart/form-data",
         },
       });
-      dispatch(closeBackDrop());
+      showSnackbar("Thêm món ăn thành công");
       navigate("/setting/product-manager");
     } catch (e) {
-      console.error(e);
-      dispatch(closeBackDrop());
+      if(e.response.status === 400){
+        showSnackbar("Món ăn đã tồn tại");
+      } else if(e.response.status === 500){
+        showSnackbar("Thêm món ăn thất bại");
+      } else {
+        showSnackbar("Có lỗi xảy ra, vui lòng thử lại sau");
+      }
     }
+    dispatch(closeBackDrop());
   }
 
   function handleSubmit(e) {
     e.preventDefault();
-    console.log(formAddFood);
     addNewFoodApi();
   }
 
@@ -77,7 +85,8 @@ function AddFood() {
                 name="name"
                 type="text"
                 onChange={handleChange}
-                placeholder="Enter name of dish"
+                required
+                placeholder="Nhập tên món ăn"
               />
             </div>
             <div className="box-inp">
@@ -89,7 +98,8 @@ function AddFood() {
                 className="ui-inp"
                 name="description"
                 onChange={handleChange}
-                placeholder="Enter description of dish"
+                required
+                placeholder="Nhập mô tả về món ăn đó"
               />
             </div>
             <div className="grid-2-col box-grid-and">
@@ -100,21 +110,31 @@ function AddFood() {
                   className="ui-inp"
                   name="price"
                   type="number"
+                  required
                   step="0.01"
                   onChange={handleChange}
-                  placeholder="Enter price of dish"
+                  placeholder="Nhập giá của món ăn"
                 />
               </div>
               <div className="box-inp">
-                <label htmlFor="amount-and-inp">Loại thức ăn</label>
-                <input
-                  id="amount-and-inp"
-                  className="ui-inp"
-                  name="category"
-                  type="text"
-                  onChange={handleChange}
-                  placeholder="Enter category of dish"
-                />
+              <InputLabel id="amount-and-inp" sx={{height: '18px', color: "white"}} ><Typography fontFamily='Barlow' fontSize='14px' fontWeight='500'>Loại thức ăn</Typography></InputLabel>
+              <Select
+                labelId="amount-and-inp"
+                id="amount-and-inp"
+                className="ui-inp"
+                sx={{height: '49.59px'}}
+                name="category"
+                value={formAddFood.category}
+                onChange={handleChange}
+                displayEmpty
+                required
+              >
+                <MenuItem value="">-- Chọn Loại Thức Ăn --</MenuItem>
+                <MenuItem value={"Main Course"}>Món chính</MenuItem>
+                <MenuItem value={"Dessert"}>Món tráng miệng</MenuItem>
+                <MenuItem value={"Drink"}>Thức uống</MenuItem>
+                <MenuItem value={"Appetizer"}>Món khai vị</MenuItem>
+              </Select>
               </div>
             </div>
             <div className="box-inp">
@@ -129,6 +149,7 @@ function AddFood() {
                   id="image-and-inp"
                   className="file-input"
                   name="file"
+                  required
                   onChange={handleChange}
                   type="file"
                 />
