@@ -32,7 +32,7 @@
     margin-bottom: 40px;
   }
   
-  .action-buttons {
+  .book-table-left .action-buttons {
     display: flex;
     gap: 20px;
     position:fixed;
