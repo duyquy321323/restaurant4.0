@@ -19,7 +19,7 @@ import NotFound from "../pages/NotFound";
 import Notification from "../pages/Notification";
 import ProductManager from "../pages/Setting/ProductManager";
 import UpdateInformation from "../pages/Setting/UpdateInformation";
-import SignUp from "../pages/SignUp";
+import SignUp from "../pages/SignUp/index";
 
 export const routes = [
   {
@@ -36,12 +36,13 @@ export const routes = [
       },
       {
         path: "/sign-up",
-        element: <SignUp title="Roll the Carpet .!" content="Skip the lag ?" />,
+        // element: <SignUp title="Roll the Carpet .!" content="Skip the lag ?" />,
+        element: <SignUp />,
       },
       {
         path: "/forget-password",
         element: (
-          <ForgetPassword title="No Worries .!!" content="Take me back .!" />
+          <ForgetPassword  />
         ),
       },
     ],
