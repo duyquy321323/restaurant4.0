@@ -5,7 +5,7 @@ const ActionButtons = () => {
   const navigate = useNavigate();
   return (
     <div className="action-container"> 
-      <div className="action-buttons">
+      <div className="action-button">
         <CiTimer className='icon' /> 
         <button className="action-btn" onClick={() => navigate("/menu")}>Menu</button>
         <button className="action-btn1" onClick={() => navigate("/menu")}>Getting delivery</button>

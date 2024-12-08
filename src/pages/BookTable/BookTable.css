@@ -33,21 +33,26 @@
   }
   
   .action-buttons {
+    background: #fff;
     display: flex;
     gap: 20px;
     position:fixed;
     bottom: 20px;
     left:10%;
     width:30%;
-    gap: 20px;
     aligh-items: center;
     justify-content: center;
+    padding: 10px;
+    border-radius: 50px;
   }
   .icon {
+    /* width: 100px; */
+    /* padding: 5px; */
+    margin-top: 15px;
     color:black;
   }
   .action-buttons button {
-
+   
     padding: 20px 20px;
     border: none;
     border-radius: 40px;
