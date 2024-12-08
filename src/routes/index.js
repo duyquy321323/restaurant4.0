@@ -41,12 +41,13 @@ export const routes = [
       },
       {
         path: "/sign-up",
-        element: <SignUp title="Roll the Carpet .!" content="Skip the lag ?" />,
+        // element: <SignUp title="Roll the Carpet .!" content="Skip the lag ?" />,
+        element: <SignUp />,
       },
       {
         path: "/forget-password",
         element: (
-          <ForgetPassword title="No Worries .!!" content="Take me back .!" />
+          <ForgetPassword  />
         ),
       },
     ],
