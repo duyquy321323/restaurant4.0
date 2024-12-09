@@ -38,7 +38,7 @@ function DashBoard(){
     },
     ]);
     const [listItem, setListItem] = useState([]);
-    const headTableList = ["Tên khách hàng", "Mã đơn hàng", "Các món ăn", "Trạng thái đơn", "Tổng tiền"];
+    const headTableList = ["Tên khách hàng", "Mã đơn hàng", "Các món ăn", "Trạng thái đơn", "Tổng tiền", "Hành động"];
 
     async function getTotalRevenue(){
         try{
@@ -85,6 +85,7 @@ function DashBoard(){
                 menuItems: item.menuItems,
                 status: item.status === "PAID"? "Đã thanh toán" : "Đang chờ",
                 totalPayment: item.totalPayment,
+                action: ""
             })))
         }catch(e){
             showSnackbar("Lỗi kết nối");
@@ -130,10 +131,10 @@ function DashBoard(){
                 <div className="container-history">
                     <div className="header-history">
                         <h1 className="title-history">Báo cáo đơn đặt hàng</h1>
-                        <button className="sort-btn-history">
+                        {/* <button className="sort-btn-history">
                             <img src={SortIcon} alt="SortIcon"/>
                             <h2>Lọc đơn hàng</h2>
-                        </button>
+                        </button> */}
                     </div>
                     <Table headTableList={headTableList} bodyTableList={listItem} />
                 </div>

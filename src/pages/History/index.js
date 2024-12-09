@@ -40,10 +40,10 @@ function History(){
             <div className="container-history">
                 <div className="header-history">
                     <h1 className="title-history">Lịch sử đặt món</h1>
-                    <button className="sort-btn-history">
+                    {/* <button className="sort-btn-history">
                         <img src={SortIcon} alt="SortIcon"/>
                         <h2>Lọc đơn hàng</h2>
-                    </button>
+                    </button> */}
                 </div>
                 <Table headTableList={headTableList} getOrdered={getHistoryOrdered} bodyTableList={listItem}/>
             </div>

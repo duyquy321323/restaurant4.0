@@ -78,7 +78,7 @@ line-height: 140%; /* 19.6px */
   padding-bottom: 10px;
 }
 
-.container-table table tbody td:nth-last-child(2) div{
+.container-table table tbody td div.status{
   padding-left: 14px;
   padding-right: 14px;
   min-height: 26px;
@@ -93,7 +93,7 @@ line-height: 140%; /* 19.6px */
   align-items: center;
 }
 
-.container-table table tbody td:nth-last-child(2) div.pending{
+.container-table table tbody td div.pending.status{
   background: rgba(255, 181, 114, 0.20);
   color: var(--Accents-Orange, #FFB572);
 }

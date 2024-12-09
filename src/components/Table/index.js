@@ -5,10 +5,11 @@ import { closeBackDrop, dialogRatingClose, dialogRatingOpen, openBackDrop } from
 import RadioGroupRating from "../RatingModel";
 import api from "../../api";
 import { useSnackbar } from "../SnackbarContext";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 function Table(props) {
   const { headTableList, bodyTableList, getOrdered } = props;
+  const navigate = useNavigate();
   const open = useSelector(state => state.backdropAction);
   const location = useLocation();
   const { showSnackbar } = useSnackbar();
@@ -64,9 +65,9 @@ function Table(props) {
                         {Object.values(item).map((data, id) => {
                           return (
                             <td key={id}>
-                              {id < Object.values(item).length - 1 || location.pathname === '/dashboard' ? (
+                              {(id < Object.values(item).length - 1 || location.pathname === '/dashboard') && Object.entries(item).at(id)[0] !== "action" ? (
                                 <div
-                                  className={`${
+                                  className={`${Object.entries(item).at(id)[0]} ${
                                     data === "Đang chờ" ? "pending" : ""
                                   }`}
                                 >
@@ -76,7 +77,7 @@ function Table(props) {
                                 data + "/5"
                               ) : Object.entries(item).at(
                                   Object.entries(item).length - 2
-                                )[1] === "Đã thanh toán" ? (
+                                )[1] === "Đã thanh toán" && location.pathname !== "/notification" ? (
                                 <Button
                                   sx={{
                                     color: "#fff",
@@ -86,7 +87,15 @@ function Table(props) {
                                 >
                                   Đánh giá ngay
                                 </Button>
-                              ) : (
+                              ) : location.pathname === "/notification" || location.pathname === "/dashboard"? <Button
+                              sx={{
+                                color: "#fff",
+                                background: "rgba(107, 226, 190, 0.24)",
+                              }}
+                              onClick={() => item["tableId"]? navigate("/detail-order/" + item["tableId"]) : navigate("/detail-order/" + item["orderCode"])}
+                            >
+                              Xem chi tiết
+                            </Button> : (
                                 "Hãy thanh toán trước"
                               )}
                             </td>

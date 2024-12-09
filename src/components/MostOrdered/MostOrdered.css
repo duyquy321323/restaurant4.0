@@ -202,3 +202,7 @@ line-height: 140%; /* 22.4px */
   .container-order-item .content-order-item::-webkit-scrollbar-thumb:hover {
     background: #4a4545; 
   }
+
+  .content-order-item.content-hot{
+    padding-bottom: 24px;
+  }

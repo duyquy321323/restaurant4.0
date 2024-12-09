@@ -1,27 +1,51 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import api from "../../api";
 import SortIcon from "../../assets/icon/Filter.svg";
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import Table from "../../components/Table";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useSnackbar } from "../../components/SnackbarContext";
+import "./Notification.css";
 import { closeBackDrop, openBackDrop } from "../../redux/action";
 
 function Notification(){
 
     // const [listItem, setListItem] = useState();
+    const userData = useSelector(state => state.account);
+    const [date, setDate] = useState(null);
     const dispatch = useDispatch();
     const { showSnackbar } = useSnackbar();
-    const listItem = Array(20).fill({
-        customer: "Eren Jaegar",
-        menuItem: "0373071643",
-        price: `21/19 Trung tâm hành chính`,
-        rating: 'completed',
-    });
+    const [listItem, setListItem] = useState([]);
 
     async function getListOrderTable(){
         try{
             dispatch(openBackDrop());
-            const response = await api.get(`admin/tableBooking/list`);
+            let url = (`admin/tableBooking/list` + (date? ("?date=" + date) : ""));
+            if(userData.user.role === 'delivery'){
+                url = `admin/delivery/orders`;
+            }
+            const response = await api.get(url);
+            if(userData.user.role === 'delivery'){
+                setListItem(Array.from(response.data.formattedOrders).map(item => ({
+                    orderCode: item.orderCode,
+                    customer: item.customer,
+                    address: item.deliveryDetails.address,
+                    deliveryTime: item.deliveryDetails.deliveryTime,
+                    phone: item.deliveryDetails.phone,
+                    status: item.status === "PAID"? "Đã thanh toán" : "Đang chờ",
+                    action: ""
+                })))
+            } else {
+            setListItem(Array.from(response.data).map(item => ({
+                tableId: item.tableId,
+                bookingDate: item.bookingDate,
+                bookingTime: item.bookingTime,
+                numberofSeats: item.numberofSeats,
+                action: ""
+            })));
+        }
             console.log(response);
         }catch(e){
             showSnackbar("Lỗi kết nối");
@@ -31,19 +55,29 @@ function Notification(){
 
     useEffect(() => {
         getListOrderTable();
-    }, [])
+    }, [date])
     
-    const headTableList = ["Tên khách hàng", "Số điện thoại", "Địa chỉ", "Trạng thái đơn hàng"];
+    let headTableList = ["Mã số bàn", "Ngày đặt bàn", "Giờ đặt bàn", "Số chỗ trống", "Hành động"];
+    if(userData.user.role === 'delivery'){
+        headTableList = ["Mã đơn hàng", "Tên khách hàng", "Địa chỉ", "Thời gian giao", "Số điện thoại", "Trạng thái", "Hành động"]
+    }
 
     return(
         <>
             <div className="container-history">
                 <div className="header-history">
                     <h1 className="title-history">Thống kê đặt bàn</h1>
-                    <button className="sort-btn-history">
-                        <img src={SortIcon} alt="SortIcon"/>
-                        <h2>Lọc đơn hàng</h2>
-                    </button>
+
+                    {userData.user.role !== 'delivery'? <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <DatePicker format="DD/MM/YYYY" sx={{
+                            "& .MuiInputBase-input": {
+                                color: "white", // Màu chữ của text
+                            },
+                            "& .MuiSvgIcon-root": {
+                                color: "white", // Màu của icon lịch
+                            },
+                            }} onChange={(e) => setDate(e.format("DD/MM/YYYY"))} />
+                        </LocalizationProvider> : <></>}
                 </div>
                 <Table headTableList={headTableList} bodyTableList={listItem}/>
             </div>

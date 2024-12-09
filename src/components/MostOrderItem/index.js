@@ -10,7 +10,7 @@ function MostOrderItem(props) {
                 <img src={item.imageUrl} alt="FoodImage"/>
                 <div className="detail-item-order">
                     <div className="name-item">{item.name}</div>
-                    <div className="quantity-item">{item.quantity} dishes ordered</div>
+                    <div className="quantity-item">{item.rating}/5 sao</div>
                 </div>
             </div>
         </div>

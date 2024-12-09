@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import api from "../../api";
 import Pattern from "../../assets/icon/Active-Pattern.svg";
 import GraphOrangeIcon from "../../assets/icon/Graph-Orange.svg";
@@ -24,6 +24,7 @@ function SideBar() {
   const dispatch = useDispatch()
   const { showSnackbar } = useSnackbar();
   const orderType = useSelector(state => state.menuAction);
+  const navigate = useNavigate();
   const userData = useSelector(state => state.account);
   let listTab = [
     {
@@ -82,7 +83,7 @@ function SideBar() {
   return (
     <>
       <div className="container-sidebar">
-        <div className="logo">
+        <div className="logo" onClick={() => navigate("/")}>
           <img src={Logo} alt="Logo" />
         </div>
         {listTab.map((item) => (
