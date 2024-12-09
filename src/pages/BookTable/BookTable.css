@@ -22,12 +22,13 @@
     font-weight: bold;
     margin-bottom: 10px;
     text-align: center;
-    font-family: "Bitter Rose", cursive;
+    color: var(--text-primary, #FACE8D);
+    font-family: "Caveat", cursive;
   }
   
   .book-table-left h2 {
     font-size: 40px;
-    font-family: "Chillax", sans-serif;
+    font-family: "Parkinsans", sans-serif;
     text-align: center;
     margin-bottom: 40px;
   }
@@ -88,12 +89,26 @@
     flex-direction: column;
     justify-content: center;
     box-sizing: border-box;
+    color: var(--text-muted, rgba(255, 255, 255, 0.80));
+/* text/large */
+font-family: "Parkinsans", sans-serif;
+font-size: 20px;
+font-style: normal;
+font-weight: 400;
+line-height: 160%; /* 32px */
     border-radius: 15px;
   }
   
   .book-table-right h2 {
     font-size: 36px;
     font-weight: 600;
+    color: var(--text-default, #FFF);
+/* heading/h2 */
+font-family: "Parkinsans", sans-serif;
+font-size: 40px;
+font-style: normal;
+font-weight: 500;
+line-height: 100%; /* 40px */
     margin-bottom: 20px;
     color: #fff;
     text-align: left;

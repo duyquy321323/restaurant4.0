@@ -1,5 +1,5 @@
-import { combineReducers, createStore } from "redux"
-import { account, backdropAction, confirmAddressAction, dialogAction, menuAction, orderAction, paymentAction, refreshAction, searchAction, sumOrderAction } from "./action"
+import { combineReducers, createStore } from "redux";
+import { account, backdropAction, confirmAddressAction, dialogAction, menuAction, orderAction, paymentAction, searchAction, sumOrderAction } from "./action";
 
 
 const allReducers = combineReducers({
@@ -14,34 +14,36 @@ const allReducers = combineReducers({
      searchAction,
 })
 
-// Hàm tải dữ liệu vào
-const saveUserData = (state) => {
-    try{
-        if(state.account){
+// hàm lưu người dùng lên localstorage
+function saveUserData(state) {
+    try {
+        if (state.account) {
             localStorage.setItem("userData", JSON.stringify(state.account));
+        } else {
+            localStorage.removeItem("userData"); // Xóa dữ liệu nếu logout
         }
-    }catch(e){
+    } catch (e) {
         console.error(e);
     }
 }
 
-// hàm lấy dữ liệu ra
-const loadUserData = () => {
-    try{
+// hàm tải người dùng về từ localStorage
+function loadUserData() {
+    try {
         const userData = localStorage.getItem("userData");
-        if(userData){
-            return userData
+        if (userData) {
+            return { account: JSON.parse(userData) }; // Đảm bảo trả về đúng cấu trúc
         }
         return undefined;
-    }catch(e){
-        console.error(e);
+    } catch (e) {
+        console.log(e);
         return undefined;
     }
 }
 
-const prevStart = loadUserData();
 
-const store = createStore(allReducers, prevStart);
+const prevState = loadUserData();
 
-store.subscribe(() => saveUserData(store.getState()));
+const store = createStore(allReducers, prevState);
+store.subscribe(() => saveUserData(store.getState()))
 export default store;

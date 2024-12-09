@@ -2,34 +2,25 @@ import React, { useState } from "react";
 import { FaFacebook, FaGithub, FaUser } from "react-icons/fa";
 import { FaLock } from "react-icons/fa6";
 import { FcGoogle } from "react-icons/fc";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useSnackbar } from "../../components/SnackbarContext";
 import { login } from "../../redux/action";
 import api from "./../../api";
 import "./LoginRegister.css";
+import { Backdrop, CircularProgress } from "@mui/material";
 
-function Login(props) {
+function Login() {
   
-  const { title, content } = props;
   const [action, setAction] = useState('');
   const navigate = useNavigate();
+  const open = useSelector(state => state.backdropAction);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const { showSnackbar } = useSnackbar();
   const [rememberMe, setRememberMe] = useState(false);
-  const handleGoogleClick = () => {
-    window.open("https://google.com", "_blank");
-  };
-
-  const handleFacebookClick = () => {
-    window.open("https://facebook.com", "_blank");
-  };
-  const handleGithubClick = () => {
-    window.open("https://facebook.com", "_blank");
-  };
   const LoginApi = (email,password) => {
     return api.post("users/login", {email,password});
   }
@@ -44,23 +35,26 @@ const handleLoginSubmit = async (event) => {
     console.log(res);
     if (res && res.data.token) {
       dispatch(login(res.data));
-      // history.back();
-      navigate('/');
-    } else {
-      toast.error("Login failed: Invalid credentials");
+      showSnackbar("Đăng nhập thành công");
+      navigate("/");
     }
   } catch (error) {
-    toast.error("Login failed: " + (error.response?.data?.message || error.message));
+    if(error.response.data.message){
+      showSnackbar(error.response.data.message);
+    } else {
+      showSnackbar("Đăng nhập thất bại");
+    }
   }
 };
-const registerLink =() => {
-    setAction(' active')
-};
-const loginLink =() => {
-    setAction('')
-};
+
   return (
     <>
+    <Backdrop
+        sx={(theme) => ({ color: "#fff", zIndex: theme.zIndex.drawer + 1 })}
+        open={open}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
         <div className="login-register-page">
          {/* Bên trái */}
             <div className="welcome-section">
@@ -70,24 +64,26 @@ const loginLink =() => {
         {/* Bên phải */}
             <div className={`wrapper${action}`}>
                 <div className="login">
-                <h2>Login</h2>
-                <p className="subtitle">Glad you're back.!</p>
+                <h2>Đăng nhập</h2>
+                <p className="subtitle">Rất vui khi bạn trở lại.!</p>
                 {/* Login Box */}
                 <div className="form-box login">
                     <form action="" onSubmit={handleLoginSubmit}>
                         <div className="input-box">
                         <input
                             type="text"
-                            placeholder='Username'
+                            placeholder='Nhập email'
                             value={email}
+                            required
                             onChange={(event) => setEmail(event.target.value)}
                         />
                             <FaUser className='icon' />
                         </div>
                         <div className="input-box">
                             <input type="password"
-                            placeholder='Password'
+                            placeholder='Nhập password'
                             value={password}
+                            required
                             onChange = {(event) => setPassword(event.target.value)} />
                             <FaLock className='icon'/>
                         </div>
@@ -98,28 +94,26 @@ const loginLink =() => {
                           checked={rememberMe}
                           onChange={() => setRememberMe(!rememberMe)}
                         />
-                        <label htmlFor="rememberMe">Remember me</label>
+                        <label htmlFor="rememberMe">Nhớ lần đăng nhập này</label>
                       </div>
                         <button 
                                 type="submit"
-                                // className={email && password ? "active" : ""}
-                                // disabled={!email || !password}
-                                > Login             </button>
-                        <div className="forgot-password"  onClick={() => navigate('/forget-password')}>Forgot password?</div>
+                                > Đăng Nhập </button>
+                        <div className="forgot-password" onClick={() => navigate('/forget-password')}>Quên mật khẩu?</div>
                         <div className="social-login">
                               <div className="or-divider">
                                   <hr />
-                                  <span>Or</span>
+                                  <span>Hoặc</span>
                                   <hr />
                                 </div>
                               <div className="social-login-group">
-                                    <button onClick={handleGoogleClick}>
+                                    <button type="button">
                                         <FcGoogle className='loginicon' />
                                     </button>
-                                    <button onClick={handleFacebookClick}>
+                                    <button type="button">
                                           <FaFacebook className='loginicon' />
                                     </button>
-                                    <button onClick={handleGithubClick}>
+                                    <button type="button">
                                       <FaGithub className='loginicon' />
                                     </button>
                               </div>
@@ -127,7 +121,7 @@ const loginLink =() => {
                         </form>
                         <div className="information-link">
                             <div className="register-link">
-                                <p>Don't have an account?  <a href="#" onClick={() => navigate('/sign-up')}>Register</a></p>
+                                <p>Chưa có tài khoản?  <a href="#" onClick={() => navigate('/sign-up')}>Đăng kí</a></p>
                             </div>
                             <div className="footer-links">
                             <a href="#">Terms & Conditions</a>

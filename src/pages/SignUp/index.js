@@ -1,158 +1,165 @@
 // import LeftLayout from "../../components/LeftComponentDefault";
-import React, { useState } from 'react';
-import { FaFacebook, FaGithub, FaUser } from "react-icons/fa";
-import { FaLock } from "react-icons/fa6";
+import React, { useState } from "react";
+import { FaFacebook, FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { toast } from 'react-toastify';
-import { login } from '../../redux/action';
-import api from './../../api';
-import './Register.css';
+import { useSnackbar } from "../../components/SnackbarContext";
+import { closeBackDrop, openBackDrop } from "../../redux/action";
+import api from "./../../api";
+import "./Register.css";
+import { Backdrop, CircularProgress } from "@mui/material";
 
+function SignUp() {
+  const navigate = useNavigate();
+  const open = useSelector(state => state.backdropAction);
+  const dispatch = useDispatch();
+  const { showSnackbar } = useSnackbar();
+  const [formRegister, setFormRegister] = useState({
+    fullname: "",
+      email: "",
+      phone : "",
+      password: "",
+      address : "",
+  });
 
-
-function SignUp(props) { const { title, content } = props;
-const [action, setAction] = useState('');
-const navigate = useNavigate();
-const [username, setUsername] = useState("");
-const [email,setEmail]= useState("");
-const [password, setPassword]= useState("");
-const [confirmPassword, setConfirmPassword] = useState("");
-const dispatch= useDispatch();
-const [rememberMe, setRememberMe] = useState(false);
-const handleGoogleClick = () => {
-  window.open('https://google.com', '_blank');
-};
-
-const handleFacebookClick = () => {
-  window.open('https://facebook.com', '_blank');
-};
-const handleGithubClick = () => {
-  window.open('https://facebook.com', '_blank');
-};
-const LoginApi = (email,password) => {
-  return api.post("users/login", {email,password});
-}
-const handleLoginSubmit = async (event) => {
-event.preventDefault(); // Prevent default form submission behavior
-if (!email || !password) {
-  toast.error("Email and password are required");
-  return;
-}
-try {
-  const res = await LoginApi(email, password);
-  console.log(res);
-  if (res && res.data.token) {
-    dispatch(login(res.data));
-    // history.back();
-    navigate('/');
-  } else {
-    toast.error("Login failed: Invalid credentials");
+  function handleChange(e){
+    const { value, name } = e.target;
+    setFormRegister((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   }
-} catch (error) {
-  toast.error("Login failed: " + (error.response?.data?.message || error.message));
-}
-};
-const registerLink =() => {
-  setAction(' active')
-};
-const loginLink =() => {
-  setAction('')
-};
-return (
-  <>
+
+  async function handleSubmit(e){
+    e.preventDefault();
+    try{
+      dispatch(openBackDrop());
+      await api.post(`users/register`, formRegister);
+      showSnackbar("Đăng ký tài khoản thành công");
+      navigate("/login");
+    }catch(e){
+      if(e.response.status === 400){
+        showSnackbar("Email đã được sử dụng, vui lòng chọn email khác");
+      } else {
+        showSnackbar("Đăng kí thất bại");
+      }
+    }
+    dispatch(closeBackDrop());
+  }
+  return (
+    <>
       <div className="login-register-page">
-       {/* Bên trái */}
-          <div className="welcome-section">
-                <h1>Roll the Carpet .!</h1>
+        {/* Bên trái */}
+        <Backdrop
+        sx={(theme) => ({ color: "#fff", zIndex: theme.zIndex.drawer + 1 })}
+        open={open}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
+        <div className="welcome-section">
+          <h1>Roll the Carpet .!</h1>
           <button className="skip-button">Skip the lag?</button>
+        </div>
+        {/* Bên phải */}
+        <div className={`wrapper`}>
+          <div className="login">
+            <h2>Đăng kí</h2>
+            <p className="subtitle"></p>
+            {/* Login Box */}
+            <div className="form-box login">
+              <form action="" onSubmit={handleSubmit}>
+                <div className="input-box">
+                  <input
+                    type="email"
+                    name="email"
+                    placeholder="Nhập email"
+                    required
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="input-box">
+                  <input
+                    type="text"
+                    placeholder="Nhập tên"
+                    name="fullname"
+                    required
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="input-box">
+                  <input
+                    type="text"
+                    name="phone"
+                    placeholder="Nhập số điện thoại"
+                    required
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="input-box">
+                  <input
+                    type="password"
+                    placeholder="Nhập mật khẩu"
+                    required
+                    name="password"
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="input-box">
+                  <input
+                    type="text"
+                    placeholder="Nhập địa chỉ"
+                    required
+                    name="address"
+                    onChange={handleChange}
+                  />
+                </div>
+                <button
+                  type="submit"
+                  // className={email && password ? "active" : ""}
+                  // disabled={!email || !password}
+                >
+                  {" "}
+                  Đăng kí{" "}
+                </button>
+
+                <div className="social-login">
+                  <div className="or-divider">
+                    <hr />
+                    <span>Hoặc</span>
+                    <hr />
+                  </div>
+                  <div className="social-login-group">
+                    <button type="button">
+                      <FcGoogle className="loginicon" />
+                    </button>
+                    <button type="button">
+                      <FaFacebook className="loginicon" />
+                    </button>
+                    <button type="button">
+                      <FaGithub className="loginicon" />
+                    </button>
+                  </div>
+                </div>
+              </form>
+              <div className="information-link">
+                <div className="register-link">
+                  <p>
+                    Đã có tài khoản?{" "}
+                    <a href="#" onClick={() => navigate("/login")}>
+                      Đăng nhập
+                    </a>
+                  </p>
+                </div>
+                <div className="footer-links">
+                  <a href="#">Terms & Conditions</a>
+                  <a href="#">Support</a>
+                  <a href="#">Customer Care</a>
+                </div>
+              </div>
+            </div>
           </div>
-      {/* Bên phải */}
-          <div className={`wrapper${action}`}>
-              <div className="login">
-              <h2>SignUp</h2>
-              <p className="subtitle">Just some details to get you in</p>
-              {/* Login Box */}
-              <div className="form-box login">
-                  <form action="" onSubmit={handleLoginSubmit}>
-                      <div className="input-box">
-                      <input
-                          type="text"
-                          placeholder='Username'
-                          value={username}
-                          onChange={(event) => setUsername(event.target.value)}
-                      />
-                          <FaUser className='icon' />
-                      </div>
-                      <div className="input-box">
-                <input
-                  type="email"
-                  placeholder="Email / Phone"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-                <FaUser className="icon" />
-              </div>
-                      <div className="input-box">
-                          <input type="password"
-                          placeholder='Password'
-                          value={password}
-                          onChange = {(event) => setPassword(event.target.value)} />
-                          <FaLock className='icon'/>
-                      </div>
-                      <div className="input-box">
-                <input
-                  type="password"
-                  placeholder="Confirm Password"
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                />
-                <FaLock className="icon" />
-              </div>
-
-                    
-
-
-                    
-                      <button 
-                              type="submit"
-                              // className={email && password ? "active" : ""}
-                              // disabled={!email || !password}
-                              > SignUp           </button>
-                      
-                      <div className="social-login">
-                            <div className="or-divider">
-                                <hr />
-                                <span>Or</span>
-                                <hr />
-                              </div>
-                            <div className="social-login-group">
-                                  <button onClick={handleGoogleClick}>
-                                      <FcGoogle className='loginicon' />
-                                  </button>
-                                  <button onClick={handleFacebookClick}>
-                                        <FaFacebook className='loginicon' />
-                                  </button>
-                                  <button onClick={handleGithubClick}>
-                                    <FaGithub className='loginicon' />
-                                  </button>
-                            </div>
-                      </div>
-                      </form>
-                      <div className="information-link">
-                          <div className="register-link">
-                              <p>Already Registered?  <a href="#" onClick={() => navigate("/login")}>Login</a></p>
-                          </div>
-                          <div className="footer-links">
-                          <a href="#">Terms & Conditions</a>
-                          <a href="#">Support</a>
-                          <a href="#">Customer Care</a>
-                        </div>
-                    </div>
-              </div>
-              </div>
-              {/* <div className="form-box registration">
+          {/* <div className="form-box registration">
                   <form action="">
                       <h1>Registration</h1>
                       <div className="input-box">
@@ -177,10 +184,10 @@ return (
                       </div>
                   </form>
               </div> */}
-          </div>
+        </div>
       </div>
-  </>
-);
+    </>
+  );
 }
 
 export default SignUp;

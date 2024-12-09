@@ -13,12 +13,12 @@ const ActionButtons = () => {
         <button className="action-btn" onClick={() => {
           dispatch(dineInAction());
           navigate("/menu?order-type=Dine In");
-          }}>Menu</button>
+          }}>Thực đơn</button>
         <button className="action-btn1" onClick={() => {
           dispatch(deliveryAction());
           navigate("/menu?order-type=Delivery");
-          }}>Getting delivery</button>
-        <button className="action-btn2" onClick={() => navigate("/book-table")} >Book a table</button>
+          }}>Giao tận nơi</button>
+        <button className="action-btn2" onClick={() => navigate("/book-table")} >Đặt bàn</button>
       </div>
     </div>
   );

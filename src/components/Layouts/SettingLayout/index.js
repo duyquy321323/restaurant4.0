@@ -4,9 +4,11 @@ import DiscountOrange from "../../../assets/icon/Discount-Orange-small.svg";
 import HeartGray from "../../../assets/icon/Heart-Gray.svg";
 import HeartOrange from "../../../assets/icon/Heart-Orange.svg";
 import "./SettingLayout.css";
+import { useSelector } from "react-redux";
 
 function SettingLayout() {
   const location = useLocation();
+  const userData = useSelector(state => state.account);
 
   const listTab = [
     {
@@ -16,7 +18,10 @@ function SettingLayout() {
       detail: "Cập nhật tên, địa chỉ, số điện thoại, v.v",
       pathname: "/update-information",
     },
-    {
+  ];
+
+  if(userData && userData.user && userData.user.role === 'admin'){
+    listTab.push({
       iconGray: DiscountGray,
       iconOrange: DiscountOrange,
       title: "Quản lý thức ăn",
@@ -29,8 +34,9 @@ function SettingLayout() {
       title: "Thêm nhân viên mới",
       detail: "Thêm nhân viên cho cửa hàng",
       pathname: "/add-employee",
-    },
-  ];
+    },)
+  }
+
   return (
     <>
       <div className="content-container">

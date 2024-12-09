@@ -24,21 +24,12 @@ function SideBar() {
   const dispatch = useDispatch()
   const { showSnackbar } = useSnackbar();
   const orderType = useSelector(state => state.menuAction);
-  const listTab = [
+  const userData = useSelector(state => state.account);
+  let listTab = [
     {
       iconWhite: HomeWhiteIcon,
       iconOrange: HomeOrangeIcon,
       navigate: `/menu/?order-type=${orderType === "DELIVERY"? "Delivery" : "Dine In"}`,
-    },
-    {
-      iconWhite: GraphWhiteIcon,
-      iconOrange: GraphOrangeIcon,
-      navigate: "/dashboard",
-    },
-    {
-      iconWhite: NotificationWhiteIcon,
-      iconOrange: NotificationOrangeIcon,
-      navigate: "/notification",
     },
     {
       iconWhite: SettingWhiteIcon,
@@ -56,7 +47,21 @@ function SideBar() {
       navigate: "/login",
     },
   ];
-
+  console.log(userData.user.role);
+  if(userData && userData.user && (userData.user.role === 'staff' || userData.user.role === 'admin')){
+    listTab.splice(1, 0, {
+      iconWhite: GraphWhiteIcon,
+      iconOrange: GraphOrangeIcon,
+      navigate: "/dashboard",
+    });
+  }
+  if(userData && userData.user && userData.user.role !== 'user'){
+    listTab.splice(2, 0, {
+      iconWhite: NotificationWhiteIcon,
+      iconOrange: NotificationOrangeIcon,
+      navigate: "/notification",
+    })
+  }
   async function logoutApp(){
     try{
       dispatch(openBackDrop());

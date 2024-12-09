@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SortIcon from "../../assets/icon/Filter.svg";
 import Table from "../../components/Table";
 import "./History.css";
+import api from "../../api";
 
 function History(){
 
@@ -11,6 +12,19 @@ function History(){
         price: `$125`,
         rating: 'completed',
     });
+
+    async function getHistoryOrdered(){
+        try{
+            const response = await api.get(`users/orders`);
+            console.log(response);
+        }catch(e){
+
+        }
+    }
+
+    useEffect(() => {
+        getHistoryOrdered()
+    }, []);
 
     const headTableList = ["Menu Items", "Total Payment", "Rating"];
 
