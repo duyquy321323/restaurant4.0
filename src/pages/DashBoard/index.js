@@ -6,49 +6,107 @@ import people from "../../assets/icon/People.svg";
 import dishes from "../../assets/icon/Dishes.svg";
 import UpIcon from "../../assets/icon/UpIcon.svg";
 import DownIcon from "../../assets/icon/DownIcon.svg";
+import { useEffect, useState } from "react";
+import api from "../../api";
+import { Backdrop, CircularProgress } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { closeBackDrop, openBackDrop } from "../../redux/action";
+import { useSnackbar } from "../../components/SnackbarContext";
 
 function DashBoard(){
-    const data = [
+    const open = useSelector(state => state.backdropAction);
+    const dispatch = useDispatch();
+    const { showSnackbar } = useSnackbar();
+    const [data, setData] = useState([
     {
         img: money,
         context: '+32.40%',
-        title: 'Total Revenue',
-        value: '$10,243.00',
+        title: 'Tổng doanh thu',
+        value: '0đ',
     },
     {
         img: dishes,
         context: '-12.40%',
-        title: 'Total Dish Ordered',
-        value: '23,456',
+        title: 'Tổng thức ăn đã đặt',
+        value: '0',
     },
     {
         img: people,
         context: '+2.40%',
-        title: 'Total Customer',
-        value: '1,234',
+        title: 'Tổng đơn hàng',
+        value: '0',
     },
-    ];
-    const listItem = Array(20).fill({
-        customer: "Eren Jaegar",
-        menuItem: "Spicy seasoned seafood noodles ",
-        price: `$125`,
-        rating: 'completed',
-    });
-    const headTableList = ["Customer", "Menu Items", "Total payment", "Status"];
+    ]);
+    const [listItem, setListItem] = useState([]);
+    const headTableList = ["Tên khách hàng", "Mã đơn hàng", "Các món ăn", "Trạng thái đơn", "Tổng tiền"];
 
-    const mostOrderedItems = [
-        { 
-            name: 'Spicy seasoned seafood noodles', 
-            orders: '200 dishes ordered' 
-        },
-        { 
-            name: 'Salted pasta with mushroom sauce', 
-            orders: '120 dishes ordered' 
-        },
-    ];
+    async function getTotalRevenue(){
+        try{
+            dispatch(openBackDrop());
+            const response = await api.get(`admin/dashboard/total-revenue`);
+            data.at(0).value = `${response.data.totalRevenue}đ`;
+            setData([...data]);
+        }catch(e){
+            showSnackbar("Lỗi kết nối");
+        }
+        dispatch(closeBackDrop());
+    }
+    async function getTotalDish(){
+        try{
+            dispatch(openBackDrop());
+            const response = await api.get(`admin/dashboard/total-dishes`);
+            data.at(1).value = `${response.data.totalDishes}`;
+            setData([...data]);
+        }catch(e){
+            showSnackbar("Lỗi kết nối");
+        }
+        dispatch(closeBackDrop());
+    }
+    async function getTotalOrdered(){
+        try{
+            dispatch(openBackDrop());
+            const response = await api.get(`admin/dashboard/total-orders`);
+            data.at(2).value = `${response.data.totalOrders}`;
+            setData([...data]);
+        }catch(e){
+            showSnackbar("Lỗi kết nối");
+        }
+        dispatch(closeBackDrop());
+    }
+
+    async function getOrders() {
+        try{
+            dispatch(openBackDrop());
+            const response = await api.get(`admin/dashboard`);
+            console.log(response);
+            setListItem(Array.from(response.data.orders).map(item => ({
+                customer: item.customer,
+                orderCode: item.orderCode,
+                menuItems: item.menuItems,
+                status: item.status === "PAID"? "Đã thanh toán" : "Đang chờ",
+                totalPayment: item.totalPayment,
+            })))
+        }catch(e){
+            showSnackbar("Lỗi kết nối");
+        }
+        dispatch(closeBackDrop());
+    }
+
+    useEffect(() => {
+        getTotalRevenue();
+        getTotalDish();
+        getTotalOrdered();
+        getOrders();
+    }, []);
 
     return (
         <div className="container_dashboard">
+            <Backdrop
+        sx={(theme) => ({ color: "#fff", zIndex: theme.zIndex.drawer + 1 })}
+        open={open}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
             <div className="box1">
         {data.map((item, index) => (
           <div className="item" key={index}>
@@ -68,14 +126,13 @@ function DashBoard(){
           </div>
         ))}
       </div>
-
             <div className="box2">
                 <div className="container-history">
                     <div className="header-history">
-                        <h1 className="title-history">Order report</h1>
+                        <h1 className="title-history">Báo cáo đơn đặt hàng</h1>
                         <button className="sort-btn-history">
-                            <img src={SortIcon} alt="SortIcon" />
-                            <h2>Filter Order</h2>
+                            <img src={SortIcon} alt="SortIcon"/>
+                            <h2>Lọc đơn hàng</h2>
                         </button>
                     </div>
                     <Table headTableList={headTableList} bodyTableList={listItem} />

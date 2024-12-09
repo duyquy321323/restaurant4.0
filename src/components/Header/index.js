@@ -10,7 +10,7 @@ function Header() {
   const listHeader = [
     {
       path: "/menu",
-      title: "Menu",
+      title: "Thực đơn",
     },
     {
       path: "/dashboard",

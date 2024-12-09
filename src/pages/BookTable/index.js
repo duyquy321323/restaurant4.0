@@ -62,10 +62,10 @@ const BookTable = () => {
         <h2>Hãy đặt chỗ trước</h2>
         <div className="action-buttons">
         <CiTimer className='icon' /> 
-          <button className="action-btn" onClick={() => navigate("/menu")}>
+          <button className="action-btn" onClick={() => navigate("/menu?order-type=Dine In")}>
             Thực đơn
           </button>
-          <button className="action-btn1" onClick={() => navigate("/delivery")}>
+          <button className="action-btn1" onClick={() => navigate("/menu?order-type=Delivery")}>
             Giao tận nơi
           </button>
           <button className="action-btn2 active">Đặt bàn</button>

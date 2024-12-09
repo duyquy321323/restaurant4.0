@@ -1,5 +1,5 @@
 import { combineReducers, createStore } from "redux";
-import { account, backdropAction, confirmAddressAction, dialogAction, menuAction, orderAction, paymentAction, searchAction, sumOrderAction } from "./action";
+import { account, backdropAction, confirmAddressAction, dialogAction, dialogRatingAction, menuAction, orderAction, paymentAction, searchAction, sumOrderAction } from "./action";
 
 
 const allReducers = combineReducers({
@@ -12,6 +12,7 @@ const allReducers = combineReducers({
      backdropAction,
      menuAction,
      searchAction,
+     dialogRatingAction,
 })
 
 // hàm lưu người dùng lên localstorage

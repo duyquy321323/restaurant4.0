@@ -240,3 +240,33 @@ export const searchAction = (state = null, action) => {
         return state;
   }
 }
+
+export const dialogRatingOpen = (slug) => {
+  return{
+    type: "OPENRATINGDIALOG",
+    data: slug,
+  }
+}
+
+export const dialogRatingClose = () => {
+  return{
+    type: "CLOSERATINGDIALOG",
+    data: null,
+  }
+}
+
+const dialogRatingState = {
+  status: false,
+  data: null,
+}
+
+export const dialogRatingAction = (state = dialogRatingState, action) => {
+  switch (action.type) {
+    case "OPENRATINGDIALOG":
+      return {status: true, data: action.data};
+    case "CLOSERATINGDIALOG":
+      return {status: false, data: null};
+    default:
+      return state;
+  }
+}

@@ -33,6 +33,7 @@ function Menu() {
       let url = `menu/${slug}?sortKey=&sortValue=&page=${pageReq}${
         keyword ? "&keyword=" + keyword : ""
       }`;
+      console.log(url);
       if (slug === "all") {
         url = `menu?sortKey=&sortValue=&page=${pageReq}${
           keyword ? "&keyword=" + keyword : ""
@@ -89,7 +90,7 @@ function Menu() {
     debounce(() => {
       getFoodByCategory(slugStorage, 1); // Luôn gọi với `page = 1` khi tìm kiếm mới.
     }, 300),
-    [slugStorage, keyword, getFoodByCategory] // Thêm `keyword` và `getFoodByCategory` vào dependencies.
+    [slugStorage, keyword] // Thêm `keyword` và `getFoodByCategory` vào dependencies.
   );
 
   // khi mà slug thay đổi thì lấy danh sách thức ăn mới
@@ -125,7 +126,7 @@ function Menu() {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [hasMore, slugStorage]);
+  }, [hasMore, page, keyword ,slugStorage]);
 
   // Mới vào trang thì tự load navbar đầu tiên
   useEffect(() => {

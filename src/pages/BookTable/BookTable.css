@@ -163,7 +163,7 @@ line-height: 100%; /* 40px */
     flex: 1;
   }
   
-  form .confirm-btn {
+  .book-table-right form .confirm-btn {
     width: 100%;
     padding: 15px;
     background: #ff715b;

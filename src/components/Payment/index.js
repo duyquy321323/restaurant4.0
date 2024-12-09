@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import api from "../../api";
 import BackIcon from "../../assets/icon/Back.svg";
 import { closeBackDrop, closePayment, openBackDrop } from "../../redux/action";
@@ -16,6 +16,7 @@ function Payment() {
   const orderList = useSelector(state => state.orderAction);
   const sumPrice = useSelector(state => state.sumOrderAction);
   const [phone, setPhone] = useState();
+  const navigate = useNavigate();
   const [searchParam] = useSearchParams();
   const orderType = searchParam.get("order-type");
   const [deliveryTime, setDeliveryTime] = useState();
@@ -30,9 +31,14 @@ function Payment() {
     try{
       dispatch(openBackDrop());
       const response = await api.post(`order/payment`, order);
-      window.location.href = response.data.paymentLinkRes.checkoutUrl;
+      // console.log(response);
+      if(order.orderType === 'Delivery'){
+        window.location.href = response.data.paymentLinkRes.checkoutUrl;
+        showSnackbar("Tạo QR thanh toán thành công, hãy quét mã để thanh toán đơn hàng");
+      } else {
+        showSnackbar("Đặt món thành công");
+      }
       getInformation();
-      showSnackbar("Tạo QR thanh toán thành công, hãy quét mã để thanh toán đơn hàng");
     }catch(e){
       if(e.response.status === 400 && e.response.data.error === "Invalid input data"){
         showSnackbar("Vui lòng chọn món ăn trước khi tiến hành thanh toán");
@@ -40,8 +46,7 @@ function Payment() {
         showSnackbar("Vui lòng chọn địa chỉ và thời gian giao món hợp lệ");
       } else if(e.response.status === 404){
         showSnackbar("Vui lòng chọn bàn ăn trước");
-      } else if(e.response.status === 403){
-        showSnackbar("Vui lòng đăng nhập trước");
+        navigate("/book-table");
       } else if(e.response.status === 500){
         showSnackbar("Tạo QR thanh toán thất bại, vui lòng thử lại sau");
       } else {
@@ -157,6 +162,7 @@ function Payment() {
                         />
                     </div>
                   </div>
+                  {orderType === 'Delivery'? 
                   <div className="bot-form-payment">
                     <div className="box-double-input">
                     <div className="card-name-payment">
@@ -169,12 +175,13 @@ function Payment() {
                         />
                     </div>
                     </div>
-                  </div>
+                  </div> : <></>
+                      }
                   <div className="box-btn-payment">
                     <button className="cancel-btn" type="button" onClick={handleClose}>
                       Hủy bỏ
                     </button>
-                    <button className="confirm-btn" type="submit">Thanh Toán</button>
+                    <button className="confirm-btn" type="submit">{orderType === 'Delivery'? 'Thanh Toán' : "Đặt món"}</button>
                   </div>
                 </form>
               </div>

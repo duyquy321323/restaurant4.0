@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import api from "../../api";
 import whiteButton from "../../assets/icon/Cart-White.svg";
@@ -11,10 +11,12 @@ import yellowStar from "../../assets/image/YellowStar.svg";
 import { addFoodOrder, closeBackDrop, openBackDrop, sumAddOrder } from "../../redux/action";
 import "./DetailFood.css";
 import { useSnackbar } from "../../components/SnackbarContext";
+import { Backdrop, CircularProgress } from "@mui/material";
 
 function DetailFood() {
   const dispatch = useDispatch();
   const { showSnackbar } = useSnackbar();
+  const open = useSelector(state => state.backdropAction);
 
   function handleAddToCart(e) {
     food.quantity = quantity;
@@ -37,8 +39,8 @@ function DetailFood() {
   async function getDetailFood() {
     try {
       dispatch(openBackDrop());
-      const response = await api.get(`admin/dish/detail/${param.slug}`);
-      setFood(response.data.data);
+      const response = await api.get(`menu/detail/${param.slug}`);
+      setFood(response.data.dish);
     } catch (e) {
       showSnackbar("Có lỗi xảy ra, vui lòng đăng nhập và thử lại");
     }
@@ -72,6 +74,12 @@ function DetailFood() {
 
   return (
     <div className="container_webpage">
+      <Backdrop
+        sx={(theme) => ({ color: "#fff", zIndex: theme.zIndex.drawer + 1 })}
+        open={open}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
       <div className="container_detailFood">
         <div className="box1">
           <img
