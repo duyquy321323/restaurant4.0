@@ -22,6 +22,7 @@ import AddEmployee from "../pages/Setting/AddEmployee";
 import ProductManager from "../pages/Setting/ProductManager";
 import UpdateInformation from "../pages/Setting/UpdateInformation";
 import SignUp from "../pages/SignUp";
+import DetailOrder from "../pages/DetailOrder";
 import SuccessPayment from "../pages/SuccessPayment";
 
 const userData = localStorage.getItem("userData");
@@ -123,6 +124,10 @@ export const routes = [
       {
         path: "/notification",
         element: <Notification />,
+      },
+      {
+        path: '/detail-order/:id',
+        element: <DetailOrder/>
       },
       {
         path: "/history",

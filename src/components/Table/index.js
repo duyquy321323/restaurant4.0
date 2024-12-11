@@ -92,7 +92,7 @@ function Table(props) {
                                 color: "#fff",
                                 background: "rgba(107, 226, 190, 0.24)",
                               }}
-                              onClick={() => item["tableId"]? navigate("/detail-order/" + item["tableId"]) : navigate("/detail-order/" + item["orderCode"])}
+                              onClick={() => item["tableId"]? navigate("/detail-order/" + item["tableId"] + "?order-type=bookingtable") : navigate("/detail-order/" + item["orderCode"] + "?order-type=delivery")}
                             >
                               Xem chi tiết
                             </Button> : (

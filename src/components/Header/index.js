@@ -21,6 +21,10 @@ function Header() {
       title: "Thông báo",
     },
     {
+      path: "/detail-order",
+      title: "Chi tiết đơn hàng",
+    },
+    {
       path: "/setting",
       title: "Cài đặt",
     },

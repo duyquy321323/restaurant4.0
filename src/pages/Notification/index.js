@@ -38,8 +38,9 @@ function Notification(){
                     action: ""
                 })))
             } else {
+                console.log(response)
             setListItem(Array.from(response.data).map(item => ({
-                tableId: item.tableId,
+                tableId: item._id,
                 bookingDate: item.bookingDate,
                 bookingTime: item.bookingTime,
                 numberofSeats: item.numberofSeats,
