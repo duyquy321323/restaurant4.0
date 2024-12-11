@@ -18,8 +18,8 @@ function ProductManager(){
     const [listFood, setListFood] = useState([]);
     const [slugStorage, setSlugStorage] = useState(listNavPath.at(0));
     const [page, setPage] = useState(1);
-    const componentRef = useRef(null);
     const navigate = useNavigate();
+    const componentRef = useRef(null);
     const [hasMore, setHasMore] = useState(true);
     const dispatch = useDispatch()
     const { showSnackbar } = useSnackbar();
@@ -32,8 +32,7 @@ function ProductManager(){
             const url = `menu/${slug}?keyword=&sortKey=&sortValue=&page=${pageReq}`;
             console.log(url);
             const response = await api.get(url);
-            console.log(pageReq);
-            const {data} = response.data;
+                const {data} = response.data;
             if(Array.isArray(data) && Array.from(data).length > 0){
                 setListFood(prev => [
                     ...prev,
