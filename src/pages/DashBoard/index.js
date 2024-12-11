@@ -85,6 +85,7 @@ function DashBoard(){
                 menuItems: item.menuItems,
                 status: item.status === "PAID"? "Đã thanh toán" : "Đang chờ",
                 totalPayment: item.totalPayment,
+                tableId: item.tableId,
                 action: ""
             })))
         }catch(e){
