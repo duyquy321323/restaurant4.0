@@ -23,15 +23,15 @@ function DetailOrder() {
     try {
       dispatch(openBackDrop());
       const response = await api.get(`admin/tableBooking/detail/${id}`);
-      console.log(response);
       setCustomer(response.data.customer);
+      console.log(response);
       setOrder({
         ...response.data,
-        items: Array.from(response.data.items).map((item) => ({
+        items: response.data.items? Array.from(response.data.items).map((item) => ({
           name: item.name,
           quantity: item.quantity,
           price: item.price,
-        })),
+        })) : [],
       })
     } catch (e) {
       showSnackbar("Lỗi kết nối");
