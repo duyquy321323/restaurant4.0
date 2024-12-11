@@ -1,14 +1,13 @@
-import { useEffect, useState } from "react";
-import api from "../../api";
-import SortIcon from "../../assets/icon/Filter.svg";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import Table from "../../components/Table";
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import api from "../../api";
 import { useSnackbar } from "../../components/SnackbarContext";
-import "./Notification.css";
+import Table from "../../components/Table";
 import { closeBackDrop, openBackDrop } from "../../redux/action";
+import "./Notification.css";
 
 function Notification(){
 
@@ -67,7 +66,7 @@ function Notification(){
         <>
             <div className="container-history">
                 <div className="header-history">
-                    <h1 className="title-history">Thống kê đặt bàn</h1>
+                    <h1 className="title-history">{userData && userData.user && userData.user.role === 'delivery'? "Đơn giao hàng" : "Thống kê đặt bàn"}</h1>
 
                     {userData.user.role !== 'delivery'? <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <DatePicker format="DD/MM/YYYY" sx={{
