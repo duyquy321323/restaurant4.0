@@ -48,7 +48,6 @@ function SideBar() {
       navigate: "/login",
     },
   ];
-  console.log(userData.user.role);
   if(userData && userData.user && (userData.user.role === 'staff' || userData.user.role === 'admin')){
     listTab.splice(1, 0, {
       iconWhite: GraphWhiteIcon,
